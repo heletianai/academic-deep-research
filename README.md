@@ -41,7 +41,7 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 │  Agent   │Researcher│  Judge       │              │  Report    │
 │  + ArXiv │ +Semantic│  (≤3 轮)     │              │            │
 └──────────┴──────────┴──────────────┴──────────────┴────────────┘
-                              ⭐ 自研创新点
+                          (核心创新)
 ```
 
 ---
@@ -53,7 +53,7 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 | Agent 编排 | LangGraph 0.2+ |
 | LLM | DeepSeek API（cost-effective）|
 | 数据源 | ArXiv MCP + Semantic Scholar MCP |
-| 评估 | RAGAs + GEval |
+| 评估 | 自研 RAGAs-lite（DeepSeek-V4 当 judge） |
 | 包管理 | uv + pyproject.toml |
 | Python | 3.12+ |
 
@@ -67,7 +67,7 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 | 工具协议 | 自定义 Tool | **MCP-First**（标准化工具接口）|
 | 质量保障 | 无内建 | **红蓝对抗 Critic-Defender**（自研）|
 | 引用处理 | 无 | 引用图谱构建 + 完整性审查 |
-| 评估框架 | 无 | RAGAs + GEval 多维打分 |
+| 评估框架 | 无 | 自研 RAGAs-lite 三指标（Faithfulness/Relevance/Precision） |
 
 ---
 
