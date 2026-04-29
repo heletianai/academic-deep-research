@@ -40,6 +40,7 @@ def run_pipeline(
     judge: JudgeAgent,
     max_rounds: int = 2,
     verbose: bool = True,
+    evaluator: Any = None,
 ) -> dict[str, Any]:
     """
     端到端辩论 pipeline。
@@ -136,7 +137,7 @@ def run_pipeline(
             f"citation={scores.get('citation')})"
         )
 
-    return {
+    result = {
         "query": query,
         "draft0": draft0,
         "final_draft": draft,
@@ -144,3 +145,23 @@ def run_pipeline(
         "verdict": verdict,
         "rounds_used": rounds_used,
     }
+
+    # Stage 3: 可选 RAGAs-lite 评估
+    if evaluator is not None:
+        if verbose:
+            print(f"\n[pipeline] Stage 3 — RAGAs-lite 三指标评估")
+        eval_report = evaluator.evaluate_all(
+            query=query,
+            draft=draft,
+            raw_papers=draft.get("raw_papers", []),
+        )
+        result["eval"] = eval_report
+        if verbose:
+            print(
+                f"  [eval] avg={eval_report['average']} "
+                f"(faith={eval_report['faithfulness'].get('score', '?')}, "
+                f"rel={eval_report['answer_relevance'].get('score', '?')}, "
+                f"prec={eval_report['context_precision'].get('score', '?')})"
+            )
+
+    return result

@@ -89,11 +89,16 @@ python -m tests.researcher_demo
 
 # 5. 跑 Stage 2 红蓝对抗端到端 demo（约 5-10 分钟）
 python -m tests.debate_demo
+
+# 6. 跑 Stage 3 完整 pipeline 多源 + RAGAs-lite（约 12-18 分钟）
+pip install requests  # Semantic Scholar 用
+python -m tests.full_pipeline_demo
 ```
 
 输出落盘到 `outputs/`：
 - Stage 1: `stage1_draft_<ts>.md` — 初稿（背景 / 方法 / 发现 + 真实 ArXiv 引用）
 - Stage 2: `debate_<ts>.md` — 完整辩论报告（初稿 + 每轮 Critic/Defender + Judge 裁决）
+- Stage 3: `full_pipeline_<ts>.md` — 多源 + 完整辩论 + RAGAs-lite 三指标报告
 
 Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地查看）
 
@@ -117,11 +122,14 @@ Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地�
 - ✅ 带 OpenRouter rate limit 重试 helper（指数退避 4 次）
 - 默认模型：DeepSeek V4 Flash（`deepseek/deepseek-v4-flash`）
 
-### ☐ Stage 3 — 多源 + 评估
-- Semantic Scholar MCP 接入（第二数据源）
-- 并行多 Researcher Agent
-- RAGAs 自动评估（faithfulness / answer_relevancy）
-- 引用图谱可视化
+### ☑ Stage 3 — 多源 + RAGAs-lite 评估
+- ✅ Semantic Scholar 直调 API（HTTP，无 MCP 依赖）
+- ✅ MultiSourceSearch：ArXiv + Semantic Scholar 并行 + 去重 + 失败 fallback
+- ✅ RAGAs-lite 三指标（自研轻量版，DeepSeek-V4 当 judge）：
+  - Faithfulness（终稿 claim 是否被 papers 支持）
+  - Answer Relevance（终稿是否回答 query）
+  - Context Precision（retrieved papers 排序质量）
+- ✅ 端到端 demo：Stage 1 → 2 → 3 一次跑通，Judge + RAGAs-lite 双独立打分一致性验证
 
 ---
 
@@ -131,4 +139,4 @@ Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地�
 |-------|------|
 | Stage 1：单 Researcher + ArXiv 初稿 | ☑ 已完成 |
 | Stage 2：红蓝对抗 Critic-Defender | ☑ 已完成 |
-| Stage 3：多源 + RAGAs 评估 | ☐ 待开发 |
+| Stage 3：多源 + RAGAs-lite 评估 | ☑ 已完成 |
