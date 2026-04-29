@@ -11,6 +11,8 @@ from typing import Any
 
 from openai import OpenAI
 
+from src.llm_utils import chat_with_retry
+
 
 RESEARCHER_SYSTEM_PROMPT = """\
 You are an academic researcher. Given a research question and a list of arXiv papers
@@ -42,7 +44,7 @@ class ResearcherAgent:
         self,
         llm_client: OpenAI,
         arxiv_tool: Any,
-        model: str = "deepseek/deepseek-chat",
+        model: str = "deepseek/deepseek-v4-flash",
         top_k: int = 5,
     ) -> None:
         self.llm = llm_client
@@ -76,7 +78,8 @@ class ResearcherAgent:
         )
 
         # 3. LLM 综合（强制 JSON）
-        resp = self.llm.chat.completions.create(
+        content = chat_with_retry(
+            self.llm,
             model=self.model,
             messages=[
                 {"role": "system", "content": RESEARCHER_SYSTEM_PROMPT},
@@ -86,7 +89,6 @@ class ResearcherAgent:
             temperature=0.3,
             max_tokens=2000,
         )
-        content = resp.choices[0].message.content
         try:
             draft = json.loads(content)
         except json.JSONDecodeError:

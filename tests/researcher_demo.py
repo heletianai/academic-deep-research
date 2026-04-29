@@ -46,7 +46,7 @@ def main() -> None:
     researcher = ResearcherAgent(
         llm_client=llm,
         arxiv_tool=arxiv_tool,
-        model="deepseek/deepseek-chat",
+        model="deepseek/deepseek-v4-flash",
         top_k=5,
     )
 

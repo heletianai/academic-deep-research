@@ -86,11 +86,16 @@ cp .env.example .env  # 填入 OPENROUTER_API_KEY
 
 # 4. 跑 Stage 1 demo（约 30-60 秒）
 python -m tests.researcher_demo
+
+# 5. 跑 Stage 2 红蓝对抗端到端 demo（约 5-10 分钟）
+python -m tests.debate_demo
 ```
 
-输出会落盘到 `outputs/stage1_draft_<timestamp>.md`，包含：
-- 背景 / 方法综述 / 主要发现 三段结构
-- 5 篇真实 ArXiv 引用（每条带 arxiv_id 与 URL）
+输出落盘到 `outputs/`：
+- Stage 1: `stage1_draft_<ts>.md` — 初稿（背景 / 方法 / 发现 + 真实 ArXiv 引用）
+- Stage 2: `debate_<ts>.md` — 完整辩论报告（初稿 + 每轮 Critic/Defender + Judge 裁决）
+
+Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地查看）
 
 ---
 
@@ -103,11 +108,14 @@ python -m tests.researcher_demo
 - ✅ 强制 arxiv_id 引用 + 防伪造 prompt
 - ✅ Demo 跑通：5 篇真实引用，三段输出
 
-### ☐ Stage 2 — 红蓝对抗（核心创新）
-- Critic Agent：事实 / 逻辑 / 引用三维质疑
-- Defender Agent：检索证据回应或承认修正
-- Judge Agent：终审 + 终稿合并
-- 固定 2 轮辩论 + 可配置最大 3 轮
+### ☑ Stage 2 — 红蓝对抗（核心创新）
+- ✅ Critic Agent：事实 / 逻辑 / 引用三维质疑（默认每维度 1-3 条）
+- ✅ Defender Agent：先搜再答 — 有证据 REBUT，无证据 CONCEDE
+- ✅ Judge Agent：三维 0.0-1.0 打分 + ACCEPT/REVISE/REJECT 裁决
+- ✅ 辩论循环（默认 2 轮，可配置）+ 提前终止（Critic 无质疑时）
+- ✅ 端到端 demo 跑通：6 条质疑 → 6 个 CONCEDE → REJECT verdict
+- ✅ 带 OpenRouter rate limit 重试 helper（指数退避 4 次）
+- 默认模型：DeepSeek V4 Flash（`deepseek/deepseek-v4-flash`）
 
 ### ☐ Stage 3 — 多源 + 评估
 - Semantic Scholar MCP 接入（第二数据源）
@@ -122,5 +130,5 @@ python -m tests.researcher_demo
 | Stage | 状态 |
 |-------|------|
 | Stage 1：单 Researcher + ArXiv 初稿 | ☑ 已完成 |
-| Stage 2：红蓝对抗 Critic-Defender | ☐ 待开发 |
+| Stage 2：红蓝对抗 Critic-Defender | ☑ 已完成 |
 | Stage 3：多源 + RAGAs 评估 | ☐ 待开发 |

@@ -1,48 +1,74 @@
 """
-CriticAgent：红蓝对抗中的「红方」，从三维发起质疑。
+CriticAgent（红方）：从事实 / 逻辑 / 引用三维质疑研究初稿。
 
-Stage 2 红蓝对抗组件。
-三维质疑维度：
-  - 事实准确性（Factual）：数据 / 数字 / 声明是否可验证？
-  - 逻辑一致性（Logical）：结论能从前提严格推出吗？
-  - 引用完整性（Citation）：是否遗漏关键相关文献？
+Stage 2 红蓝对抗第一环。无外部工具调用，纯 LLM。
 """
 
 from __future__ import annotations
 
+import json
 from typing import Any
+
+from openai import OpenAI
+
+from src.llm_utils import chat_with_retry
+from src.prompts.critic import CRITIC_SYSTEM_PROMPT, CRITIC_USER_TEMPLATE
 
 
 class CriticAgent:
-    """
-    Stage 2 — 红方 Critic Agent。
+    """红方：三维质疑（factual / logical / citation）。"""
 
-    职责：
-    1. 接收研究初稿（draft: dict）
-    2. 逐维度生成质疑列表（每维度 1-3 条）
-    3. 输出结构化批评报告供 DefenderAgent 回应
+    def __init__(
+        self,
+        llm_client: OpenAI,
+        model: str = "deepseek/deepseek-v4-flash",
+    ) -> None:
+        self.llm = llm_client
+        self.model = model
 
-    输出格式（dict）：
-        {
-            "factual": list[str],   # 事实质疑列表
-            "logical": list[str],   # 逻辑质疑列表
-            "citation": list[str],  # 引用质疑列表
-            "round": int            # 当前辩论轮次（1-3）
-        }
-    """
-
-    def __init__(self, llm: Any) -> None:
-        self.llm = llm
-
-    def run(self, draft: dict[str, Any], round_num: int = 1) -> dict[str, Any]:
+    def run(self, draft_text: str, round_num: int = 1) -> dict[str, Any]:
         """
-        生成三维质疑报告。
+        生成三维 critique。
 
         Args:
-            draft: ResearcherAgent 或上轮修正后的研究初稿
-            round_num: 当前辩论轮次，1-indexed，最大 3
+            draft_text: 当前要质疑的草稿（markdown 或 JSON 串）
+            round_num: 第几轮辩论（1-based）
 
         Returns:
-            结构化批评报告 dict
+            {
+                "factual": [str, ...],
+                "logical": [str, ...],
+                "citation": [str, ...]
+            }
         """
-        raise NotImplementedError("Stage 2 待实现：CriticAgent.run()")
+        user = CRITIC_USER_TEMPLATE.format(round_num=round_num, draft_text=draft_text)
+        content = chat_with_retry(
+            self.llm,
+            model=self.model,
+            messages=[
+                {"role": "system", "content": CRITIC_SYSTEM_PROMPT},
+                {"role": "user", "content": user},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.5,
+            max_tokens=1500,
+        )
+        try:
+            critique = json.loads(content)
+        except json.JSONDecodeError:
+            return {
+                "factual": [],
+                "logical": [],
+                "citation": [],
+                "_raw": content,
+                "_parse_error": True,
+            }
+
+        for dim in ("factual", "logical", "citation"):
+            critique.setdefault(dim, [])
+        return critique
+
+    @staticmethod
+    def is_empty(critique: dict[str, Any]) -> bool:
+        """所有维度都没质疑 → 可提前终止辩论。"""
+        return not any(critique.get(d) for d in ("factual", "logical", "citation"))
