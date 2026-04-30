@@ -27,8 +27,10 @@ import argparse
 import json
 import os
 import sys
+import threading
 import time
 import traceback
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -139,12 +141,36 @@ def run_one(
         }
 
 
+def load_existing_records(out_dir: Path) -> list[dict[str, Any]]:
+    """从 out_dir 下所有 ablation_*.json 加载已跑成功的 records，去重。"""
+    seen: set[tuple[str, str, int]] = set()
+    records: list[dict[str, Any]] = []
+    for path in sorted(out_dir.glob("ablation_*.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            recs = data.get("records", []) if isinstance(data, dict) else data
+            for r in recs:
+                if r.get("status") != "ok":
+                    continue
+                key = (r.get("config", ""), r.get("topic_id", ""), r.get("seed", 0))
+                if key in seen:
+                    continue
+                seen.add(key)
+                records.append(r)
+        except (OSError, json.JSONDecodeError):
+            continue
+    return records
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--topics", type=str, default=None, help="逗号分隔 topic id 子集，如 T01,T02")
     parser.add_argument("--configs", type=str, default=None, help="逗号分隔 config 子集，如 baseline,full")
     parser.add_argument("--seeds", type=int, default=None, help="覆盖 yaml 的 seeds_per_run")
     parser.add_argument("--out-dir", type=str, default=None, help="输出目录（默认 benchmarks/results/）")
+    parser.add_argument("--resume", action="store_true", help="跳过已跑成功的 (config, topic, seed) 组合")
+    parser.add_argument("--inter-sleep", type=float, default=3.0, help="每条 pipeline 之间 sleep 秒数（避让 ArXiv 429）— 仅串行模式生效")
+    parser.add_argument("--workers", type=int, default=3, help="并发线程数（默认 3，设 1 退化串行）")
     args = parser.parse_args()
 
     load_dotenv(ROOT / ".env")
@@ -192,42 +218,125 @@ def main() -> None:
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     json_path = out_dir / f"ablation_{ts}.json"
 
+    # Resume: 加载所有历史 ok records，跳过已跑组合
+    skip_set: set[tuple[str, str, int]] = set()
     results: list[dict[str, Any]] = []
+    if args.resume:
+        existing = load_existing_records(out_dir)
+        for r in existing:
+            skip_set.add((r["config"], r["topic_id"], r["seed"]))
+        results.extend(existing)
+        print(f"[ablation] --resume 加载已跑成功 {len(existing)} 条，跳过这些组合")
+
     t_start = time.time()
 
-    for ci, config in enumerate(configs, 1):
-        for ti, topic in enumerate(topics, 1):
+    # 展开任务列表（跳过 resume skip_set）
+    tasks: list[tuple[dict[str, Any], dict[str, Any], int]] = []
+    for config in configs:
+        for topic in topics:
             for s in range(1, seeds_per_run + 1):
-                idx = len(results) + 1
+                key = (config["name"], topic["id"], s)
+                if key in skip_set:
+                    continue
+                tasks.append((config, topic, s))
+
+    print(f"[ablation] 待跑 {len(tasks)} 条 / 并发 workers={args.workers}")
+
+    results_lock = threading.Lock()
+    completed_count = 0
+
+    def worker(task: tuple[dict[str, Any], dict[str, Any], int]) -> dict[str, Any]:
+        config, topic, seed = task
+        return run_one(llm, topic, config, seed, evaluator, model)
+
+    if args.workers <= 1:
+        # 串行回退路径（保留 inter-sleep 节流）
+        for ti, task in enumerate(tasks, 1):
+            rec = worker(task)
+            results.append(rec)
+            completed_count += 1
+            idx = len(results)
+            cfg_n, top_id, seed_n = task[0]["name"], task[1]["id"], task[2]
+            if rec["status"] == "ok":
                 print(
-                    f"[{idx}/{total}] config={config['name']} | topic={topic['id']} | seed={s} ... ",
-                    end="",
+                    f"[{idx}/{total}] config={cfg_n} | topic={top_id} | seed={seed_n} ... "
+                    f"avg={rec['weighted_average']} "
+                    f"(F={rec['scores']['faithfulness']:.2f} "
+                    f"C={rec['scores']['coverage']:.2f} "
+                    f"CA={rec['scores']['citation_accuracy']:.2f} "
+                    f"S={rec['scores']['structure_coherence']:.2f}) "
+                    f"{rec['elapsed_sec']}s",
                     flush=True,
                 )
-                rec = run_one(llm, topic, config, s, evaluator, model)
-                if rec["status"] == "ok":
-                    print(
-                        f"avg={rec['weighted_average']} "
-                        f"(F={rec['scores']['faithfulness']:.2f} "
-                        f"C={rec['scores']['coverage']:.2f} "
-                        f"CA={rec['scores']['citation_accuracy']:.2f} "
-                        f"S={rec['scores']['structure_coherence']:.2f}) "
-                        f"{rec['elapsed_sec']}s"
-                    )
-                else:
-                    print(f"ERROR: {rec.get('error', '')[:80]}")
-                results.append(rec)
+            else:
+                print(
+                    f"[{idx}/{total}] config={cfg_n} | topic={top_id} | seed={seed_n} ... "
+                    f"ERROR: {rec.get('error', '')[:80]}",
+                    flush=True,
+                )
+            if args.inter_sleep > 0:
+                time.sleep(args.inter_sleep)
+            if completed_count % 5 == 0:
+                json_path.write_text(
+                    json.dumps(
+                        {"meta": {"total": total, "done": idx, "ts": ts}, "records": results},
+                        ensure_ascii=False,
+                        indent=2,
+                    ),
+                    encoding="utf-8",
+                )
+    else:
+        # 并发路径
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            future_to_task = {executor.submit(worker, t): t for t in tasks}
+            for future in as_completed(future_to_task):
+                task = future_to_task[future]
+                cfg_n, top_id, seed_n = task[0]["name"], task[1]["id"], task[2]
+                try:
+                    rec = future.result()
+                except Exception as e:  # 兜底：worker 自身 try/except 已经包了，这里不应该到
+                    rec = {
+                        "topic_id": top_id,
+                        "topic_query": task[1]["query"],
+                        "domain": task[1]["domain"],
+                        "config": cfg_n,
+                        "seed": seed_n,
+                        "elapsed_sec": 0.0,
+                        "status": "error",
+                        "error": f"worker uncaught: {str(e)[:200]}",
+                        "traceback": traceback.format_exc()[:1000],
+                    }
 
-                # 每 5 次刷盘
-                if idx % 5 == 0:
-                    json_path.write_text(
-                        json.dumps(
-                            {"meta": {"total": total, "done": idx, "ts": ts}, "records": results},
-                            ensure_ascii=False,
-                            indent=2,
-                        ),
-                        encoding="utf-8",
-                    )
+                with results_lock:
+                    results.append(rec)
+                    completed_count += 1
+                    idx = len(results)
+                    if rec["status"] == "ok":
+                        print(
+                            f"[{idx}/{total}] config={cfg_n} | topic={top_id} | seed={seed_n} ... "
+                            f"avg={rec['weighted_average']} "
+                            f"(F={rec['scores']['faithfulness']:.2f} "
+                            f"C={rec['scores']['coverage']:.2f} "
+                            f"CA={rec['scores']['citation_accuracy']:.2f} "
+                            f"S={rec['scores']['structure_coherence']:.2f}) "
+                            f"{rec['elapsed_sec']}s",
+                            flush=True,
+                        )
+                    else:
+                        print(
+                            f"[{idx}/{total}] config={cfg_n} | topic={top_id} | seed={seed_n} ... "
+                            f"ERROR: {rec.get('error', '')[:80]}",
+                            flush=True,
+                        )
+                    if completed_count % 5 == 0:
+                        json_path.write_text(
+                            json.dumps(
+                                {"meta": {"total": total, "done": idx, "ts": ts}, "records": results},
+                                ensure_ascii=False,
+                                indent=2,
+                            ),
+                            encoding="utf-8",
+                        )
 
     elapsed_total = time.time() - t_start
     print(f"\n[ablation] 全部完成，{len(results)} 条 / 用时 {elapsed_total / 60:.1f} 分钟")

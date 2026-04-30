@@ -281,7 +281,7 @@ def write_headlines(summary: dict, out_path: Path) -> None:
     )
     lines.append("")
 
-    lines.append("## 激进版（拆"对抗仅自身贡献"）\n")
+    lines.append("## 激进版（拆「对抗仅自身贡献」）\n")
     if db_dim:
         lines.append(
             f"5 组 ablation 验证：仅引入红蓝对抗（不加多源）使 Faithfulness 提升 {debate_only_pct:.1f}%；"

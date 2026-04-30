@@ -48,3 +48,9 @@ data/
 
 # Demo 输出（每次跑都会生成，不提交）
 outputs/
+
+# Benchmark papers cache（API 拉取的论文摘要，每次跑会重新生成）
+benchmarks/papers_cache/
+
+# Benchmark 中间状态备份
+benchmarks/results/*.bak*

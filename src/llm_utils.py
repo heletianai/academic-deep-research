@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 from typing import Any
 
-from openai import OpenAI, RateLimitError, APIError
+from openai import OpenAI, RateLimitError, APIError, APITimeoutError
 
 
 def chat_with_retry(
@@ -19,6 +19,7 @@ def chat_with_retry(
     messages: list[dict[str, str]],
     max_retries: int = 4,
     initial_backoff: float = 5.0,
+    timeout: float = 60.0,
     provider_order: list[str] | None = None,
     **kwargs: Any,
 ) -> str:
@@ -49,12 +50,18 @@ def chat_with_retry(
                 model=model,
                 messages=messages,
                 extra_body=extra_body,
+                timeout=timeout,
                 **kwargs,
             )
             return resp.choices[0].message.content or ""
         except RateLimitError as e:
             last_err = e
             print(f"  [LLM] 429 rate limit (attempt {attempt}/{max_retries})，{backoff:.0f}s 后重试 ...")
+            time.sleep(backoff)
+            backoff *= 2
+        except APITimeoutError as e:
+            last_err = e
+            print(f"  [LLM] timeout {timeout:.0f}s (attempt {attempt}/{max_retries})，{backoff:.0f}s 后重试 ...")
             time.sleep(backoff)
             backoff *= 2
         except APIError as e:

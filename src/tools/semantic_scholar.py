@@ -6,17 +6,25 @@ Semantic Scholar Public API: https://api.semanticscholar.org/graph/v1
 - 返回字段更丰富（citationCount / references / influentialCitationCount）
 
 接口与 ArXivSearch 对齐（list[dict]），便于多源并行调用。
+
+2026.4.30 升级：加 papers 缓存（同 ArXivSearch，应对 ablation 多 seed 复用）。
 """
 
 from __future__ import annotations
 
+import hashlib
+import json
 import time
+from pathlib import Path
 from typing import Any
 
 import requests
 
 
 SEMANTIC_SCHOLAR_API = "https://api.semanticscholar.org/graph/v1"
+
+ROOT = Path(__file__).parent.parent.parent
+CACHE_DIR = ROOT / "benchmarks" / "papers_cache"
 
 
 class SemanticScholarSearch:
@@ -27,12 +35,45 @@ class SemanticScholarSearch:
         top_k: int = 5,
         timeout: float = 15.0,
         backoff: float = 2.0,
+        use_cache: bool = True,
+        cache_only: bool | None = None,
     ) -> None:
         self.top_k = top_k
         self.timeout = timeout
         self.backoff = backoff
+        self.use_cache = use_cache
+        if cache_only is None:
+            import os as _os
+            cache_only = _os.getenv("ARXIV_CACHE_ONLY", "").lower() in ("1", "true", "yes")
+        self.cache_only = cache_only
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "academic-deep-research/0.1"})
+        if use_cache:
+            CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+    def _cache_key(self, query: str, top_k: int) -> Path:
+        h = hashlib.md5(f"{query}|{top_k}".encode()).hexdigest()[:16]
+        return CACHE_DIR / f"ss_{h}.json"
+
+    def _read_cache(self, query: str, top_k: int) -> list[dict[str, Any]] | None:
+        if not self.use_cache:
+            return None
+        path = self._cache_key(query, top_k)
+        if path.exists():
+            try:
+                return json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                return None
+        return None
+
+    def _write_cache(self, query: str, top_k: int, results: list[dict[str, Any]]) -> None:
+        if not self.use_cache or not results:
+            return
+        path = self._cache_key(query, top_k)
+        try:
+            path.write_text(json.dumps(results, ensure_ascii=False), encoding="utf-8")
+        except OSError:
+            pass
 
     def search(self, query: str, top_k: int | None = None) -> list[dict[str, Any]]:
         """
@@ -45,6 +86,16 @@ class SemanticScholarSearch:
                 citation_count, source="semantic_scholar"
         """
         k = top_k or self.top_k
+
+        # 缓存命中
+        cached = self._read_cache(query, k)
+        if cached is not None:
+            return cached
+
+        # cache_only 模式：miss 直接返空，不打 API
+        if self.cache_only:
+            return []
+
         url = f"{SEMANTIC_SCHOLAR_API}/paper/search"
         params = {
             "query": query,
@@ -52,22 +103,26 @@ class SemanticScholarSearch:
             "fields": "title,abstract,authors,year,citationCount,externalIds,url,venue",
         }
 
-        for attempt in range(3):
+        # 加重试：限速时退避更狠（30s/60s/120s/240s/480s）
+        base_backoff = 30.0
+        for attempt in range(5):
             try:
                 resp = self.session.get(url, params=params, timeout=self.timeout)
                 if resp.status_code == 429:
-                    print(f"  [SemanticScholar] 429，等 {self.backoff}s")
-                    time.sleep(self.backoff)
-                    self.backoff *= 2
+                    wait = base_backoff * (2 ** attempt)
+                    print(f"  [SemanticScholar] {attempt+1}/5 限速，退避 {wait:.0f}s")
+                    time.sleep(wait)
                     continue
                 resp.raise_for_status()
                 data = resp.json()
                 break
             except (requests.RequestException, ValueError) as e:
-                if attempt == 2:
-                    print(f"  [SemanticScholar] 失败 {e}，返回空")
+                if attempt == 4:
+                    print(f"  [SemanticScholar] 全部失败 {e}，返回空")
                     return []
-                time.sleep(self.backoff)
+                wait = base_backoff * (2 ** attempt)
+                print(f"  [SemanticScholar] {attempt+1}/5 错误 {str(e)[:60]}，等 {wait:.0f}s")
+                time.sleep(wait)
         else:
             return []
 
@@ -98,6 +153,9 @@ class SemanticScholarSearch:
                     "doi": doi,
                 }
             )
+
+        # 写缓存（仅成功才写）
+        self._write_cache(query, k, results)
         return results
 
 
