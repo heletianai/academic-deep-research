@@ -50,11 +50,12 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 
 | 组件 | 技术 |
 |------|------|
-| Agent 编排 | LangGraph 0.2+ |
-| LLM | DeepSeek API（cost-effective）|
-| 数据源 | ArXiv MCP + Semantic Scholar MCP |
-| 评估 | 自研 RAGAs-lite（DeepSeek-V4 当 judge） |
-| 包管理 | uv + pyproject.toml |
+| Agent 编排 | 自研 graph-based pipeline (LangGraph-style state passing) |
+| LLM | Zhipu GLM-4-Flash (默认免费) / DeepSeek-V4 (OpenRouter) 双 provider 切换 |
+| 数据源 | ArXiv 直接调用 + Semantic Scholar HTTP API（双源并行 + 去重）|
+| 评估 | 4 维 Quality Evaluator（Faithfulness / Coverage / Citation Accuracy / Structure Coherence）+ 自研 RAGAs-lite 三指标 |
+| 容器化 | Docker + docker-compose（一键启动）|
+| 包管理 | pip + pyproject.toml |
 | Python | 3.12+ |
 
 ---
@@ -73,27 +74,50 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 
 ## 快速开始
 
+### Option A: Docker（推荐，一键启动）
+
+```bash
+# 1. 配置 API key
+cp .env.example .env
+# 编辑 .env 填 ZHIPU_API_KEY=xxxx (智谱 GLM-4-Flash 完全免费)
+# 或 OPENROUTER_API_KEY=xxxx (DeepSeek paid)
+
+# 2. 一键启动
+docker compose up
+
+# 3. 跑 ablation 实验（5 配置 × 10 topic × 3 seed = 150 次）
+docker compose --profile ablation up
+```
+
+### Option B: 本地 venv
+
 ```bash
 # 1. 创建虚拟环境
 python3 -m venv .venv
 source .venv/bin/activate
 
-# 2. 装依赖（Stage 1 最小集）
-pip install openai python-dotenv arxiv
+# 2. 装依赖
+pip install openai python-dotenv arxiv requests pyyaml matplotlib
 
-# 3. 配置 API key
-cp .env.example .env  # 填入 OPENROUTER_API_KEY
+# 3. 配置 API key（同上）
+cp .env.example .env
 
-# 4. 跑 Stage 1 demo（约 30-60 秒）
-python -m tests.researcher_demo
-
-# 5. 跑 Stage 2 红蓝对抗端到端 demo（约 5-10 分钟）
-python -m tests.debate_demo
-
-# 6. 跑 Stage 3 完整 pipeline 多源 + RAGAs-lite（约 12-18 分钟）
-pip install requests  # Semantic Scholar 用
-python -m tests.full_pipeline_demo
+# 4. 跑 demo（任选）
+python -m tests.researcher_demo         # Stage 1: ~30-60s
+python -m tests.debate_demo             # Stage 1+2: ~5-10min
+python -m tests.full_pipeline_demo      # Stage 1+2+3: ~12-18min
+python -m scripts.run_ablation          # 完整 ablation 5×10×3
+python -m scripts.analyze_ablation      # 出 4 张图 + summary
 ```
+
+### LLM Provider 切换
+
+`.env` 设 `LLM_PROVIDER=zhipu`（默认免费）或 `openrouter`：
+
+| Provider | Model | 价格 | 注册 |
+|---|---|---|---|
+| Zhipu | `glm-4-flash` | **完全免费** | https://open.bigmodel.cn |
+| OpenRouter | `deepseek/deepseek-v4-flash` | ~$0.10/M token | https://openrouter.ai |
 
 输出落盘到 `outputs/`：
 - Stage 1: `stage1_draft_<ts>.md` — 初稿（背景 / 方法 / 发现 + 真实 ArXiv 引用）
@@ -125,11 +149,48 @@ Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地�
 ### ☑ Stage 3 — 多源 + RAGAs-lite 评估
 - ✅ Semantic Scholar 直调 API（HTTP，无 MCP 依赖）
 - ✅ MultiSourceSearch：ArXiv + Semantic Scholar 并行 + 去重 + 失败 fallback
-- ✅ RAGAs-lite 三指标（自研轻量版，DeepSeek-V4 当 judge）：
+- ✅ RAGAs-lite 三指标（自研轻量版，LLM judge）：
   - Faithfulness（终稿 claim 是否被 papers 支持）
   - Answer Relevance（终稿是否回答 query）
   - Context Precision（retrieved papers 排序质量）
 - ✅ 端到端 demo：Stage 1 → 2 → 3 一次跑通，Judge + RAGAs-lite 双独立打分一致性验证
+
+### ☑ Stage 4 — 4 维 Quality Evaluator + Ablation 实验
+
+升级 RAGAs-lite 三指标 → 4 维 Quality Evaluator，增加引用真实性 + 结构连贯性两个学术综述特有维度。
+
+**4 维评分**（每维 0.0-1.0，加权综合）：
+
+| 维度 | 权重 | 检验 |
+|---|---|---|
+| **Faithfulness** | 0.30 | 每条 claim 能否被 retrieved papers 支持 |
+| **Coverage** | 0.25 | 是否覆盖研究问题的关键子方向（≥4 sub-aspect 满分）|
+| **Citation Accuracy** | 0.25 | arxiv_id 真实性（在 papers 列表里）+ 引用 vs claim 匹配度 |
+| **Structure Coherence** | 0.20 | Background→Methods→Findings 章节衔接 + 内部一致性 |
+
+**Ablation 实验**：5 配置 × 10 topic × 3 seed = 150 次 pipeline，验证「红蓝对抗 + 多源检索」对各维度的独立贡献。
+
+| Config | 描述 |
+|---|---|
+| baseline | Researcher only, ArXiv only, 无 debate |
+| multisource | + Semantic Scholar，无 debate |
+| debate_1round | ArXiv + 1 轮辩论 |
+| debate_2round | ArXiv + 2 轮辩论 |
+| full | Multisource + 2 轮辩论 |
+
+**测试 topic**（5 用户熟悉领域 + 5 跨领域）：Multi-agent debate / RAG / vLLM / Reflexion / LoRA / Diffusion / VLM / RLHF / MoE / Long-context
+
+跑法：
+```bash
+python -m scripts.run_ablation        # 跑全量 5×10×3
+python -m scripts.analyze_ablation    # 出 4 张图 + summary.md + 简历金句草稿
+```
+
+输出：
+- `benchmarks/results/ablation_<ts>.json` — 完整 150 条 records
+- `benchmarks/results/ablation_summary.md` — 对比表 + 关键 delta
+- `benchmarks/results/headlines.md` — 简历金句 3 版（保守 / 标准 / 激进）
+- `benchmarks/figures/` — radar / bar / box / cost 4 张图
 
 ---
 
@@ -140,3 +201,4 @@ Demo 输出真实样本：[outputs/](outputs/) （已加入 .gitignore，本地�
 | Stage 1：单 Researcher + ArXiv 初稿 | ☑ 已完成 |
 | Stage 2：红蓝对抗 Critic-Defender | ☑ 已完成 |
 | Stage 3：多源 + RAGAs-lite 评估 | ☑ 已完成 |
+| Stage 4：4 维 Quality Evaluator + Ablation | ☑ 已完成 |

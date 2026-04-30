@@ -1,0 +1,92 @@
+# Ablation 测试 topic 配置（10 个）
+#
+# 5 个用户熟悉领域 + 5 个跨领域，覆盖 LLM Agent / RAG / 推理优化 + Diffusion / VLM / RL / MoE / 长上下文
+#
+# 设计目标：
+# 1. 测试项目 2 在用户熟悉领域的深度（命中可写简历金句）
+# 2. 测试项目 2 跨领域泛化能力（避免简历"领域窄"质疑）
+# 3. 每个 topic 复杂度均匀（不是简单事实题）
+
+topics:
+  - id: T01
+    domain: llm_agent_user_familiar
+    query: "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy"
+    note: "项目 2 自身的 demo query，用户最熟"
+
+  - id: T02
+    domain: rag_user_familiar
+    query: "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques"
+    note: "项目 1 技术栈，八股已覆盖"
+
+  - id: T03
+    domain: inference_user_familiar
+    query: "vLLM and PagedAttention for efficient LLM serving with continuous batching"
+    note: "刚跑完的 benchmark 主题"
+
+  - id: T04
+    domain: agent_self_improvement_user_familiar
+    query: "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine"
+    note: "项目 1 Reflexion 部分"
+
+  - id: T05
+    domain: peft_user_familiar
+    query: "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods"
+    note: "八股深度覆盖部分"
+
+  # 跨领域（5 个，测泛化）
+  - id: T06
+    domain: diffusion_cross
+    query: "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison"
+    note: "生成模型跨架构对比"
+
+  - id: T07
+    domain: vlm_cross
+    query: "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives"
+    note: "多模态检索对比"
+
+  - id: T08
+    domain: rlhf_cross
+    query: "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison"
+    note: "RLHF 对齐方法对比"
+
+  - id: T09
+    domain: moe_cross
+    query: "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies"
+    note: "MoE 路由机制对比"
+
+  - id: T10
+    domain: long_context_cross
+    query: "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions"
+    note: "长上下文技术对比"
+
+# Ablation 配置（5 组）
+configs:
+  - name: baseline
+    description: "Researcher only, ArXiv only, no debate"
+    multisource: false
+    max_rounds: 0
+
+  - name: multisource
+    description: "Researcher + ArXiv + Semantic Scholar, no debate"
+    multisource: true
+    max_rounds: 0
+
+  - name: debate_1round
+    description: "ArXiv only, single-round debate"
+    multisource: false
+    max_rounds: 1
+
+  - name: debate_2round
+    description: "ArXiv only, 2-round debate"
+    multisource: false
+    max_rounds: 2
+
+  - name: full
+    description: "Multisource + 2-round debate"
+    multisource: true
+    max_rounds: 2
+
+# 每组每 topic 的重复次数（控制方差）
+seeds_per_run: 3
+
+# 总调用 = len(configs) * len(topics) * seeds_per_run = 5 * 10 * 3 = 150

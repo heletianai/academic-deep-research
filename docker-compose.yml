@@ -1,0 +1,22 @@
+services:
+  deep-research:
+    build: .
+    image: academic-deep-research:latest
+    container_name: academic-deep-research
+    environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-zhipu}
+      - ZHIPU_API_KEY=${ZHIPU_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+    volumes:
+      - ./outputs:/app/outputs
+      - ./benchmarks/results:/app/benchmarks/results
+    # default: run full pipeline demo
+    # override: docker compose run deep-research python -m scripts.run_ablation
+    command: ["python", "-m", "tests.full_pipeline_demo"]
+
+  ablation:
+    extends:
+      service: deep-research
+    container_name: academic-deep-research-ablation
+    command: ["python", "-m", "scripts.run_ablation"]
+    profiles: ["ablation"]
