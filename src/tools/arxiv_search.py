@@ -33,8 +33,9 @@ class ArXivSearch:
             import os as _os
             cache_only = _os.getenv("ARXIV_CACHE_ONLY", "").lower() in ("1", "true", "yes")
         self.cache_only = cache_only
-        # 客户端层退避：page_size 拉大、delay 拉大、num_retries 增大
-        self._client = arxiv.Client(page_size=top_k, delay_seconds=5.0, num_retries=5)
+        # Fast-mode（2026.4.30 ablation 加速）：客户端 delay 0.5s + 重试 1 次。
+        # 配合下方的 fail-soft 限速策略：撞限速直接返空，不退避。
+        self._client = arxiv.Client(page_size=top_k, delay_seconds=0.5, num_retries=1)
         if use_cache:
             CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -84,38 +85,32 @@ class ArXivSearch:
             sort_by=arxiv.SortCriterion.Relevance,
         )
 
-        last_err: Exception | None = None
-        for attempt in range(1, 6):  # 最多 5 次外层重试
-            try:
-                results: list[dict[str, Any]] = []
-                for paper in self._client.results(s):
-                    results.append(
-                        {
-                            "arxiv_id": paper.get_short_id(),
-                            "title": paper.title.strip(),
-                            "abstract": paper.summary.strip().replace("\n", " "),
-                            "authors": [a.name for a in paper.authors],
-                            "url": paper.entry_id,
-                            "pdf_url": paper.pdf_url,
-                            "published": paper.published.isoformat() if isinstance(paper.published, datetime) else str(paper.published),
-                            "categories": paper.categories,
-                        }
-                    )
-                # 3. 写缓存
-                self._write_cache(query, k, results)
-                return results
-            except Exception as e:
-                last_err = e
-                err_str = str(e)
-                # 429 / 503 / 网络错误 → 指数退避
-                if "429" in err_str or "503" in err_str or "rate" in err_str.lower():
-                    backoff = 30 * (2 ** (attempt - 1))  # 30s / 60s / 120s / 240s / 480s
-                    print(f"  [ArXiv] {attempt}/5 限速，退避 {backoff}s ...")
-                    time.sleep(backoff)
-                else:
-                    # 非限速错误，短暂退避后重试
-                    print(f"  [ArXiv] {attempt}/5 错误 {err_str[:80]}，等 10s ...")
-                    time.sleep(10)
+        # Fail-soft：限速直接返空（不退避），让 pipeline 继续推进。
+        # Defender 在 search_per_critique=0 模式下根本不调这里；偶发 cache miss 也能秒返。
+        try:
+            results: list[dict[str, Any]] = []
+            for paper in self._client.results(s):
+                results.append(
+                    {
+                        "arxiv_id": paper.get_short_id(),
+                        "title": paper.title.strip(),
+                        "abstract": paper.summary.strip().replace("\n", " "),
+                        "authors": [a.name for a in paper.authors],
+                        "url": paper.entry_id,
+                        "pdf_url": paper.pdf_url,
+                        "published": paper.published.isoformat() if isinstance(paper.published, datetime) else str(paper.published),
+                        "categories": paper.categories,
+                    }
+                )
+            self._write_cache(query, k, results)
+            return results
+        except Exception as e:
+            err_str = str(e)
+            if "429" in err_str or "503" in err_str or "rate" in err_str.lower():
+                print(f"  [ArXiv] 限速 → fail-soft 返空")
+            else:
+                print(f"  [ArXiv] 错误 {err_str[:80]} → fail-soft 返空")
+            return []
 
         # 全部重试失败 → 返回空（Researcher 会处理空 papers 情况）
         print(f"  [ArXiv] 全部重试失败，返回空: {last_err}")

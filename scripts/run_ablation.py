@@ -71,7 +71,7 @@ def make_pipeline(llm: OpenAI, config: dict[str, Any], model: str) -> dict[str, 
     researcher = ResearcherAgent(llm_client=llm, arxiv_tool=search_tool, model=model, top_k=5)
     critic = CriticAgent(llm_client=llm, model=model)
     defender = DefenderAgent(
-        llm_client=llm, arxiv_tool=ArXivSearch(top_k=3), model=model, search_per_critique=2
+        llm_client=llm, arxiv_tool=ArXivSearch(top_k=3), model=model, search_per_critique=0
     )
     judge = JudgeAgent(llm_client=llm, model=model)
     return {"researcher": researcher, "critic": critic, "defender": defender, "judge": judge}
@@ -191,6 +191,13 @@ def main() -> None:
         base_url = "https://openrouter.ai/api/v1"
         model = "deepseek/deepseek-v4-flash"
         print(f"[ablation] provider=openrouter model={model}")
+    elif provider == "deepseek":
+        api_key = os.getenv("DEEPSEEK_API_KEY")
+        if not api_key:
+            sys.exit("DEEPSEEK_API_KEY 未设置（在 .env）")
+        base_url = "https://api.deepseek.com/v1"
+        model = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+        print(f"[ablation] provider=deepseek model={model} (paid, cache-friendly)")
     else:
         sys.exit(f"未知 LLM_PROVIDER: {provider}")
 

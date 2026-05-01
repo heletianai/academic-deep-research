@@ -46,6 +46,10 @@ class DefenderAgent:
         all_papers: list[dict[str, Any]] = []
         per_critique: dict[str, list[dict[str, Any]]] = {}
 
+        # search_per_critique=0 完全跳过 ArXiv 调用（fast-mode 用），让 Defender 仅基于 Researcher 已给的 papers 答辩
+        if self.search_per_critique <= 0:
+            return all_papers, per_critique
+
         # 把所有维度 critique 拍平
         flat_critiques: list[str] = []
         for dim in ("factual", "logical", "citation"):
