@@ -1,0 +1,639 @@
+{
+  "meta": {
+    "total": 150,
+    "done": 30,
+    "ts": "20260430_195532"
+  },
+  "records": [
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.565,
+      "elapsed_sec": 24.3,
+      "n_papers": 5,
+      "n_citations": 4,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.58,
+      "elapsed_sec": 24.5,
+      "n_papers": 5,
+      "n_citations": 4,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.67,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 26.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.505,
+      "elapsed_sec": 27.7,
+      "n_papers": 5,
+      "n_citations": 3,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.665,
+      "elapsed_sec": 23.6,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 23.6,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 25.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 28.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.73,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.725,
+      "elapsed_sec": 25.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.73,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 22.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.7,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 24.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.9
+      },
+      "weighted_average": 0.815,
+      "elapsed_sec": 23.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 20.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 23.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.835,
+      "elapsed_sec": 25.3,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 23.4,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 18.1,
+      "n_papers": 5,
+      "n_citations": 0,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.433,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.4,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.24,
+      "elapsed_sec": 19.1,
+      "n_papers": 5,
+      "n_citations": 0,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.7,
+      "elapsed_sec": 22.3,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.655,
+      "elapsed_sec": 24.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 23.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.76,
+      "elapsed_sec": 22.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.515,
+      "elapsed_sec": 24.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 0.6,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.405,
+      "elapsed_sec": 26.2,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.73,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 25.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.6,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.745,
+      "elapsed_sec": 28.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.665,
+      "elapsed_sec": 25.3,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 24.7,
+      "n_papers": 5,
+      "n_citations": 3,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 24.4,
+      "n_papers": 5,
+      "n_citations": 3,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.655,
+      "elapsed_sec": 23.8,
+      "n_papers": 5,
+      "n_citations": 3,
+      "status": "ok"
+    }
+  ]
+}

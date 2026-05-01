@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "total": 1,
+    "done": 1,
+    "ts": "20260429_225917",
+    "elapsed_sec": 137.1,
+    "n_topics": 1,
+    "n_configs": 1,
+    "seeds": 1,
+    "ok": 1,
+    "error": 0
+  },
+  "records": [
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.5,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.58,
+      "elapsed_sec": 137.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    }
+  ]
+}

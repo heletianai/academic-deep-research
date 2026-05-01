@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "total": 150,
+    "done": 15,
+    "ts": "20260429_230356"
+  },
+  "records": [
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.4,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.685,
+      "elapsed_sec": 140.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.5,
+      "scores": {
+        "faithfulness": 0.6,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.61,
+      "elapsed_sec": 111.3,
+      "n_papers": 5,
+      "n_citations": 4,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.67,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.505,
+      "elapsed_sec": 143.5,
+      "n_papers": 5,
+      "n_citations": 4,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.4,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.65,
+      "elapsed_sec": 148.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.6,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.745,
+      "elapsed_sec": 175.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.6,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.745,
+      "elapsed_sec": 149.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.835,
+      "elapsed_sec": 85.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.9,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.8
+      },
+      "weighted_average": 0.845,
+      "elapsed_sec": 117.6,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.8,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.805,
+      "elapsed_sec": 144.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.835,
+      "elapsed_sec": 161.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.6,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.8
+      },
+      "weighted_average": 0.765,
+      "elapsed_sec": 132.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.8,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 196.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.73,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.835,
+      "elapsed_sec": 245.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 2,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.73,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.9
+      },
+      "weighted_average": 0.815,
+      "elapsed_sec": 210.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 3,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.83,
+      "scores": {
+        "faithfulness": 0.9,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.835,
+      "elapsed_sec": 239.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "status": "ok"
+    }
+  ]
+}
