@@ -118,6 +118,7 @@ python -m scripts.analyze_ablation      # 出 4 张图 + summary
 |---|---|---|---|
 | Zhipu | `glm-4-flash` | **完全免费** | https://open.bigmodel.cn |
 | OpenRouter | `deepseek/deepseek-v4-flash` | ~$0.10/M token | https://openrouter.ai |
+| DeepSeek 官方 | `deepseek-chat` | 低价、cache 友好 | https://platform.deepseek.com （`LLM_PROVIDER=deepseek`）|
 
 输出落盘到 `outputs/`：
 - Stage 1: `stage1_draft_<ts>.md` — 初稿（背景 / 方法 / 发现 + 真实 ArXiv 引用）
@@ -191,6 +192,36 @@ python -m scripts.analyze_ablation    # 出 4 张图 + summary.md + 简历金句
 - `benchmarks/results/ablation_summary.md` — 对比表 + 关键 delta
 - `benchmarks/results/headlines.md` — 简历金句 3 版（保守 / 标准 / 激进）
 - `benchmarks/figures/` — radar / bar / box / cost 4 张图
+
+---
+
+## Ablation 结果与结论（负结果研究）
+
+**主发现：在中等能力模型上，LLM 重写型红蓝对抗不产生质量增益，且显著损伤忠实度与引用准确率。** 这是一个被完整对照实验与跨家族独立复现支撑的负结果。
+
+### 主数据（GLM-4-Flash 全栈，150 次，149 有效）
+
+| Config | Faithfulness | Coverage | Citation Acc. | Structure | Weighted |
+|---|---|---|---|---|---|
+| baseline | **0.667** | 0.677 | **0.993** | 0.710 | **0.759** |
+| multisource | 0.543 | 0.653 | 0.933 | 0.690 | 0.698 |
+| debate_1round | 0.497 | 0.700 | 0.807 | 0.638 | 0.653 |
+| debate_2round | 0.467 | 0.680 | 0.783 | 0.720 | 0.650 |
+| full | 0.467 | 0.680 | 0.637 | 0.697 | 0.609 |
+
+### 配对显著性检验（per topic+seed 配对，bootstrap 95% CI）
+
+- **debate 配置 vs baseline**：Faithfulness −0.18~−0.20、Citation Accuracy −0.19~−0.36，**CI 全部显著**，且 2 轮比 1 轮更差（剂量效应）→ [paired_significance.md](benchmarks/results/paired_significance.md)
+- **multisource vs baseline**：四维无一显著增益（Coverage −0.023 n.s.）
+- **跨家族独立复现**：DeepSeek 全栈（policy+judge 整栈换家族）90 次同协议实验，debate 回归的方向、显著性、剂量效应全部一致（2 轮：Faithfulness −0.303、Citation −0.303，CI 显著）→ [paired_significance_deepseek.md](benchmarks/results/paired_significance_deepseek.md)——排除"单一 judge 家族偏好短保守输出"的替代解释
+
+### 负结果的 5 层根因
+
+1. Researcher 起点已近饱和，重写无上行空间；2. Critic 在跨领域 topic 上产生"编造质疑"；3. Defender 检索预算受限（`search_per_critique=0`），无法引入新证据、只能重写；4. LLM-as-judge 对短而保守的输出存在评分偏好；5. 跨领域 topic 检索基线低，拉低均值。
+
+**工程结论**：重写型 debate 的失败模式是"无新信息的重写"——修正方向不是加轮数，而是给 Defender 真实检索预算（信息增量）或换更强基座（能力增量）。
+
+> 诚实修正注记（2026-07-23 复审）：早期 headline 草稿中 "multisource Coverage +3.4% / Structure +4.1%" 与主数据矛盾（multisource 实测四维均低于 baseline），已废弃。本节所有数字可由 `scripts/paired_test.py` 对入库原始 JSON 一键复现。
 
 ---
 

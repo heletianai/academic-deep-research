@@ -124,6 +124,8 @@ def run_one(
             "elapsed_sec": round(elapsed, 1),
             "n_papers": len(result["draft0"].get("raw_papers", [])),
             "n_citations": len(result["final_draft"].get("citations", [])),
+            # 终稿全文入档（剔除体积大的原始检索结果）——badcase 分类与后补 judge 重评的文本基础
+            "final_report": {k: v for k, v in result["final_draft"].items() if k != "raw_papers"},
             "status": "ok",
         }
     except Exception as e:
