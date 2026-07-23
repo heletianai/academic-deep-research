@@ -39,7 +39,7 @@ Judge Agent     ← 终审：接受 / 推翻 / 要求补充
 │          │          │  Critic ↔    │  RAGAs       │            │
 │Researcher│Multi-    │  Defender    │  + GEval     │  Final     │
 │  Agent   │Researcher│  Judge       │              │  Report    │
-│  + ArXiv │ +Semantic│  (≤3 轮)     │              │            │
+│  + ArXiv │ +Semantic│  (≤2 轮)     │              │            │
 └──────────┴──────────┴──────────────┴──────────────┴────────────┘
                           (核心创新)
 ```
