@@ -64,10 +64,16 @@ class ResearcherAgent:
                 "raw_papers": [],
             }
 
-        # 2. 拼上下文
+        # 2. 拼上下文（authors 为可选字段：离线/跨源检索不保证提供作者信息）
+        def _author_line(p: dict) -> str:
+            authors = p.get("authors") or []
+            if not authors:
+                return ""
+            return f"Authors: {', '.join(authors[:3])}{' et al.' if len(authors) > 3 else ''}\n"
+
         papers_str = "\n\n".join(
             f"[{p['arxiv_id']}] {p['title']}\n"
-            f"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\n"
+            f"{_author_line(p)}"
             f"Abstract: {p['abstract']}"
             for p in papers
         )
