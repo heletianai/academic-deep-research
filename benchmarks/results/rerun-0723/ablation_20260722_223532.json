@@ -1,0 +1,1040 @@
+{
+  "meta": {
+    "total": 20,
+    "done": 20,
+    "ts": "20260722_223532",
+    "elapsed_sec": 410.0,
+    "n_topics": 10,
+    "n_configs": 2,
+    "seeds": 1,
+    "ok": 20,
+    "error": 0
+  },
+  "records": [
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.833,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 19.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "检索增强生成（RAG）通过结合外部知识库与大型语言模型（LLM），有效缓解了模型幻觉和知识过时问题。在医疗、电信、法律等专业领域，RAG的检索策略直接影响回答质量。混合搜索结合稀疏检索（如BM25）与稠密检索，利用两者互补性提升召回率；重排序通过交叉编码器精排候选文档，提高上下文精度；自校正机制（如CRAG）则针对检索失败场景进行纠错。这些技术共同构成了RAG系统的核心优化方向。",
+        "methods": "现有方法主要分为三类：\n1. **混合搜索**：结合BM25与稠密检索，通过倒数秩融合（RRF）合并结果。例如，[2509.23793] 在伊斯兰知识问答中采用BM25+稠密检索+交叉编码器重排序的三阶段流水线，[2605.12028] 在SemEval-2026任务中引入查询重写与混合搜索，[2605.02520] 在生物医学领域对比了稠密、混合、重排序等五种策略。\n2. **重排序**：使用交叉编码器（如BGE-reranker-v2-m3）对检索结果进行精排。[2605.02520] 发现交叉编码器重排序在生物医学QA中取得最高复合得分（0.827），[2509.23793] 也验证了其有效性。\n3. **自校正与高级检索**：[2601.16984] 提出TelcoAI，采用智能体式多模态RAG，包含结构化查询规划与元数据引导检索，实现87%召回率；[2507.23217] 的DocsRay通过伪目录生成与分层检索，将复杂度从O(N)降至O(S + k1·Ns)，并在MMLongBench-Doc上达到64.7%准确率。",
+        "findings": "主要发现：\n1. 混合搜索普遍优于单一检索方法，但重排序可进一步提升精度。[2605.02520] 显示交叉编码器重排序的复合得分（0.827）略高于稠密检索（0.822），而多查询扩展因引入噪声导致上下文精度最低（0.671）。\n2. 查询重写与领域自适应解码策略（如[2605.12028]中技术领域使用确定性解码）可提升检索效果，但复杂策略（如多查询扩展）可能适得其反。\n3. 多模态与智能体RAG在专业文档（如3GPP规范）中表现突出，[2601.16984] 通过结构化分块与多模态融合实现16%的改进。\n未解决问题：现有研究缺乏对自校正机制（如CRAG）的系统评估；混合搜索中稀疏与稠密检索的权重自适应调整尚未充分探索；跨领域迁移性仍需验证。",
+        "citations": [
+          {
+            "arxiv_id": "2509.23793",
+            "title": "Transformer Tafsir at QIAS 2025 Shared Task: Hybrid Retrieval-Augmented Generation for Islamic Knowledge Question Answering",
+            "url": "https://arxiv.org/abs/2509.23793"
+          },
+          {
+            "arxiv_id": "2605.12028",
+            "title": "Caraman at SemEval-2026 Task 8: Three-Stage Multi-Turn Retrieval with Query Rewriting, Hybrid Search, and Cross-Encoder Reranking",
+            "url": "https://arxiv.org/abs/2605.12028"
+          },
+          {
+            "arxiv_id": "2605.02520",
+            "title": "Benchmarking Retrieval Strategies for Biomedical Retrieval-Augmented Generation: A Controlled Empirical Study",
+            "url": "https://arxiv.org/abs/2605.02520"
+          },
+          {
+            "arxiv_id": "2601.16984",
+            "title": "TelcoAI: Advancing 3GPP Technical Specification Search through Agentic Multi-Modal Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2601.16984"
+          },
+          {
+            "arxiv_id": "2507.23217",
+            "title": "Zero-Shot Document Understanding using Pseudo Table of Contents-Guided Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2507.23217"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.733,
+      "scores": {
+        "faithfulness": 0.8,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.805,
+      "elapsed_sec": 20.3,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）在生成文本时存在幻觉问题，即产生与事实不符的内容，这严重影响了其在检索增强生成（RAG）等实际应用中的可靠性。多智能体辩论系统通过引入多个LLM智能体相互验证和辩论，旨在减少幻觉并提高事实准确性。此类系统利用智能体之间的信息不对称和协作机制，克服单一模型的自确认偏差，从而提升输出的真实性。该领域的研究对于构建可信赖的AI系统至关重要，尤其在医疗、法律等高风险领域。",
+        "methods": "现有方法主要分为三类：1）基于多智能体协作的幻觉检测与修正框架，如MARCH[2603.24579]通过求解器、提议器和检查器三个专门智能体，利用信息不对称和强化学习（MARL）训练，实现事实对齐。2）基于强化学习的推理事实性增强方法，如[2507.22940]结合事实分类器、GRPO算法和机制可解释性，优化中间推理步骤的事实准确性。3）多智能体通信拓扑优化方法，如Agent Q-Mix[2604.00344]将拓扑选择建模为合作MARL问题，使用QMIX值分解学习通信决策；GoAgent[2603.19677]显式建模群组结构，通过条件信息瓶颈压缩通信。此外，Contagion Networks[2606.20493]研究了评估者偏好传播对多智能体系统的影响，发现拓扑结构（链式 vs. 全连接）和评估委员会规模会显著影响偏好传染。",
+        "findings": "主要发现包括：1）信息不对称机制能有效打破自确认偏差，MARCH[2603.24579]使8B模型性能媲美闭源模型。2）中间推理步骤的事实准确性普遍较低（如Claude-3.7仅81.93%），但通过强化学习可提升高达49.90%[2507.22940]。3）多智能体系统的通信拓扑对性能影响显著，Agent Q-Mix[2604.00344]在HLE基准上达到20.8%准确率，GoAgent[2603.19677]实现93.84%平均准确率并降低17% token消耗。4）评估者偏好会传播，但增大委员会规模（k=3）可减少68.9%的传染效应[2606.20493]。未解决问题包括：如何设计更鲁棒的拓扑以适应动态任务，以及如何平衡通信开销与事实性提升。",
+        "citations": [
+          {
+            "arxiv_id": "2603.24579",
+            "title": "MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination",
+            "url": "https://arxiv.org/abs/2603.24579"
+          },
+          {
+            "arxiv_id": "2507.22940",
+            "title": "Trustworthy Reasoning: Evaluating and Enhancing Factual Accuracy in LLM Intermediate Thought Processes",
+            "url": "https://arxiv.org/abs/2507.22940"
+          },
+          {
+            "arxiv_id": "2606.20493",
+            "title": "Contagion Networks: Evaluator Preference Propagation in Multi-Agent LLM Systems",
+            "url": "https://arxiv.org/abs/2606.20493"
+          },
+          {
+            "arxiv_id": "2604.00344",
+            "title": "Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2604.00344"
+          },
+          {
+            "arxiv_id": "2603.19677",
+            "title": "GoAgent: Group-of-Agents Communication Topology Generation for LLM-based Multi-Agent Systems",
+            "url": "https://arxiv.org/abs/2603.19677"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.77,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 16.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "智能体自我改进与反思是大型语言模型（LLM）应用中的关键研究方向，旨在使智能体能够从过往经验中学习、调整行为并提升长期性能。现有方法如Reflexion、SELF-RAG和Self-Refine通过反思机制修正错误，但面临记忆利用效率低、因果推理能力弱以及风格特征副作用等问题。该领域的重要性在于推动智能体从单次问答向持续学习与自适应演化迈进，对开放环境下的决策任务具有重大意义。",
+        "methods": "已有方法主要分为三类：\n1. **记忆与反思框架**：如AEL [2604.21725] 采用双时间尺度框架，快速时间尺度通过Thompson Sampling学习记忆检索策略，慢速时间尺度通过LLM驱动的反思诊断失败模式并注入因果洞察。Hindsight [2512.12818] 将记忆组织为四个逻辑网络（世界事实、智能体经验、实体摘要、演化信念），支持保留、回忆和反思操作。\n2. **因果反思机制**：Causal Reflection [2508.04495] 显式建模因果性，通过反思机制识别预测与观察结果之间的不匹配，生成因果假设以修正内部模型。\n3. **技能演化方法**：SkillComposer [2606.06079] 将技能构建分解为创建、改进和合并三个可学习操作，通过拒绝采样训练实现技能自我演化。\n此外，部分研究关注风格特征的副作用 [2601.10809]，发现简洁性会显著降低感知专业性，提示风格控制需多目标优化。",
+        "findings": "主要发现包括：\n1. 记忆与反思结合可显著提升性能，如AEL [2604.21725] 在组合基准上实现58%的累积改进，但额外机制（如规划器演化、技能提取）反而导致性能下降，表明瓶颈在于自我诊断经验使用方式而非架构复杂度。\n2. Hindsight [2512.12818] 在长时对话记忆基准上，使用20B开源模型将准确率从39%提升至83.6%，并超越GPT-4o全上下文基线，证明结构化记忆的有效性。\n3. 因果反思 [2508.04495] 为智能体自适应和自纠正提供了理论基础，但尚未在具体任务中验证。\n未解决问题包括：如何平衡风格特征间的副作用 [2601.10809]；技能泛化与特化之间的张力 [2606.06079]；以及如何将因果推理有效整合到现有反思框架中。",
+        "citations": [
+          {
+            "arxiv_id": "2604.21725",
+            "title": "AEL: Agent Evolving Learning for Open-Ended Environments",
+            "url": "https://arxiv.org/abs/2604.21725"
+          },
+          {
+            "arxiv_id": "2512.12818",
+            "title": "Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects",
+            "url": "https://arxiv.org/abs/2512.12818"
+          },
+          {
+            "arxiv_id": "2508.04495",
+            "title": "Causal Reflection with Language Models",
+            "url": "https://arxiv.org/abs/2508.04495"
+          },
+          {
+            "arxiv_id": "2601.10809",
+            "title": "A Concise Agent is Less Expert: Revealing Side Effects of Using Style Features on Conversational Agents",
+            "url": "https://arxiv.org/abs/2601.10809"
+          },
+          {
+            "arxiv_id": "2606.06079",
+            "title": "SkillComposer: Learning to Evolve Agent Skills for Specification and Generalization",
+            "url": "https://arxiv.org/abs/2606.06079"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 19.2,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）的高效服务部署面临显存瓶颈和调度效率挑战。vLLM 提出的 PagedAttention 通过分页管理 KV 缓存，结合连续批处理（continuous batching）技术，显著提升了推理吞吐量。然而，实际场景中请求到达模式动态、模型更新频繁，且多任务并行（如微调与推理共存）进一步加剧了资源竞争。现有研究在块级调度、混合任务协同、公平性调度及 KV 缓存压缩等方面进行了探索，旨在突破 vLLM 的扩展性限制。",
+        "methods": "1. **块级连续批处理**：BlockServe [2607.08930] 针对扩散 LLM 的收敛异质性，提出块粒度调度，在块边界立即驱逐完成请求，并采用混合状态执行（混合双缓存与并行解码），结合计算感知准入控制器，实现 1.9-10.6 倍吞吐提升。\n2. **混合任务协同调度**：MACE [2510.03283] 在边缘服务器上共置推理（prefill/decode）与微调，通过迭代级调度平衡延迟与模型更新，利用内存管理最大化任务性能，降低推理延迟达 63%。Loquetier [2511.00101] 虚拟化多 LoRA 适配器，统一微调与推理的前向传播，通过合并计算路径减少内核调用开销，实现 3.0 倍推理吞吐和 46.4 倍 SLO 达成率提升。\n3. **公平性调度**：Justitia [2510.17015] 针对任务并行 LLM 代理，基于虚拟时间公平队列算法，以内存为中心量化代理成本，并选择性“宠幸”代理以加速完成，在 vLLM 上实现公平与效率兼顾。\n4. **KV 缓存压缩**：Joint Encoding [2601.03067] 将不同请求和输入块的相似 KV 缓存块联合编码为共享表示，在保持标准缓存结构的同时实现 4.38 倍压缩，提升 vLLM 吞吐约 40%。",
+        "findings": "主要发现：连续批处理可通过块粒度调度（BlockServe）或迭代级混合调度（MACE）进一步优化；统一微调与推理的框架（Loquetier）能显著提升资源利用率；公平性调度（Justitia）在保证最坏情况延迟的同时提高整体效率；KV 缓存联合编码（Joint Encoding）有效缓解显存瓶颈。未解决问题：现有方法多针对特定场景（如扩散模型、边缘部署、LoRA 微调），缺乏通用性；块级调度与 PagedAttention 的细粒度分页如何协同尚不明确；多任务共置时的资源隔离与性能干扰仍需深入研究。",
+        "citations": [
+          {
+            "arxiv_id": "2607.08930",
+            "title": "BlockServe: Block-Grained Continuous Batching for High-Throughput Diffusion LLM Serving",
+            "url": "https://arxiv.org/abs/2607.08930"
+          },
+          {
+            "arxiv_id": "2510.03283",
+            "title": "MACE: A Hybrid LLM Serving System with Colocated SLO-aware Continuous Retraining Alignment",
+            "url": "https://arxiv.org/abs/2510.03283"
+          },
+          {
+            "arxiv_id": "2511.00101",
+            "title": "Loquetier: A Virtualized Multi-LoRA Framework for Unified LLM Fine-tuning and Serving",
+            "url": "https://arxiv.org/abs/2511.00101"
+          },
+          {
+            "arxiv_id": "2510.17015",
+            "title": "Justitia: Fair and Efficient Scheduling of Task-parallel LLM Agents with Selective Pampering",
+            "url": "https://arxiv.org/abs/2510.17015"
+          },
+          {
+            "arxiv_id": "2601.03067",
+            "title": "Joint Encoding of KV-Cache Blocks for Scalable LLM Serving",
+            "url": "https://arxiv.org/abs/2601.03067"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.565,
+      "elapsed_sec": 17.6,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）的参数高效微调（PEFT）方法旨在以少量可训练参数适配下游任务，降低计算成本。LoRA通过低秩矩阵分解更新权重，QLoRA进一步量化权重以减少显存占用，而Adapter方法在层间插入小型网络。这些方法在自然语言处理任务中广泛应用，但面临几何结构适配、低资源语言泛化等挑战。",
+        "methods": "现有PEFT方法可分为三类：1）低秩分解方法，如LoRA[2603.21970]及其变体MoSLoRA[2602.14490]，后者引入混合几何空间专家以增强表达能力；2）量化方法，如QLoRA[2510.16985]，通过4-bit量化降低显存需求；3）Adapter方法，如MMEA[2511.06696]针对等变图神经网络设计，通过标量门控调制特征幅度保持对称性。此外，Prompt Tuning[2603.21970]通过可学习前缀适配模型。PEFT-Bench[2511.21285]提供了统一评估框架，涵盖7种方法及27个数据集。",
+        "findings": "主要发现：1）LoRA在医疗文本摘要中优于全微调，ROUGE-1达43.52，仅用0.6%参数[2603.21970]；2）MoSLoRA在数学推理任务上提升5.6%-15.9%[2602.14490]；3）QLoRA在孟加拉语仇恨检测中以<1%参数达到92.23% F1[2510.16985]；4）MMEA在等变图网络微调中实现SOTA[2511.06696]。未解决问题：现有方法多局限于欧氏空间，对层次或循环结构数据适配不足；低资源语言场景下泛化性仍需验证；缺乏统一的理论解释各方法适用边界。",
+        "citations": [
+          {
+            "arxiv_id": "2511.06696",
+            "title": "Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks",
+            "url": "https://arxiv.org/abs/2511.06696"
+          },
+          {
+            "arxiv_id": "2602.14490",
+            "title": "Parameter-Efficient Fine-Tuning of LLMs with Mixture of Space Experts",
+            "url": "https://arxiv.org/abs/2602.14490"
+          },
+          {
+            "arxiv_id": "2603.21970",
+            "title": "Parameter-Efficient Fine-Tuning for Medical Text Summarization: A Comparative Study of Lora, Prompt Tuning, and Full Fine-Tuning",
+            "url": "https://arxiv.org/abs/2603.21970"
+          },
+          {
+            "arxiv_id": "2511.21285",
+            "title": "PEFT-Bench: A Parameter-Efficient Fine-Tuning Methods Benchmark",
+            "url": "https://arxiv.org/abs/2511.21285"
+          },
+          {
+            "arxiv_id": "2510.16985",
+            "title": "Parameter-Efficient Fine-Tuning for Low-Resource Languages: A Comparative Study of LLMs for Bengali Hate Speech Detection",
+            "url": "https://arxiv.org/abs/2510.16985"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 18.3,
+      "n_papers": 5,
+      "n_citations": 4,
+      "final_report": {
+        "background": "扩散模型在图像生成领域取得了显著进展，其中去噪扩散概率模型（DDPM）通过逐步去噪过程生成高质量图像，但推理步骤多、计算开销大。近年来，流匹配（Flow Matching）和整流流（Rectified Flow）作为替代范式出现，通过学习更直接的传输路径来减少采样步数。这些方法在低资源硬件上的效率差异引发了广泛关注，同时其几何特性（如路径曲率）对生成质量的影响成为研究重点。此外，扩散模型在离散数据（如语言）和分子构象生成等领域的应用也面临挑战，需要进一步探索其与流匹配方法的优劣。",
+        "methods": "已有方法主要分为三类：1）DDPM：通过前向扩散加噪和反向去噪生成图像，通常需要1000步迭代，路径随机且曲率较高（曲率约3.45）[2511.19379]。2）流匹配/整流流：学习从噪声到数据的直线路径，曲率接近最优（约1.02），可使用轻量级Euler求解器，在10步内保持高保真度[2511.19379]。3）改进的流匹配变体：如A-FloPS通过自适应速度分解将扩散模型重参数化为流匹配形式，在5步内实现低FID[2509.00036]；GO-Flow通过流形分解将分子生成分解为平移、旋转和构象子空间，在50步内达到高质量[2605.25577]。此外，离散扩散模型（如D3PM）用于语言生成，但生成质量仍低于自回归模型[2507.07050]。",
+        "findings": "主要发现：1）流匹配在低资源硬件上显著优于DDPM，其整流路径曲率低，10步即可达到高保真，而DDPM在相同步数下质量崩溃[2511.19379]。2）A-FloPS通过自适应机制进一步加速，5步即可生成清晰图像，优于现有无训练采样器[2509.00036]。3）GO-Flow通过流形分解使分子构象生成在50步内达到最优，验证了几何先验的重要性[2605.25577]。4）离散扩散模型在语言生成中处理速度快，但生成质量（如困惑度）仍不如自回归模型[2507.07050]。未解决问题：如何进一步减少流匹配的步数至1-2步而不损失质量；离散扩散模型在语言任务中的生成质量提升；以及这些方法在更大规模数据集上的泛化性。",
+        "citations": [
+          {
+            "arxiv_id": "2511.19379",
+            "title": "Efficiency vs. Fidelity: A Comparative Analysis of Diffusion Probabilistic Models and Flow Matching on Low-Resource Hardware",
+            "url": "https://arxiv.org/abs/2511.19379"
+          },
+          {
+            "arxiv_id": "2509.00036",
+            "title": "A-FloPS: Accelerating Diffusion Models via Adaptive Flow Path Sampler",
+            "url": "https://arxiv.org/abs/2509.00036"
+          },
+          {
+            "arxiv_id": "2605.25577",
+            "title": "Geometric Flow Matching for Molecular Conformation Generation via Manifold Decomposition",
+            "url": "https://arxiv.org/abs/2605.25577"
+          },
+          {
+            "arxiv_id": "2507.07050",
+            "title": "Discrete Diffusion Models for Language Generation",
+            "url": "https://arxiv.org/abs/2507.07050"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 0.67,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.422,
+      "elapsed_sec": 18.3,
+      "n_papers": 5,
+      "n_citations": 3,
+      "final_report": {
+        "background": "视觉-语言预训练（Vision-Language Pre-training, VLP）旨在通过大规模图文对数据学习跨模态表示，其核心目标函数包括对比学习（如CLIP、SigLIP）和图像描述生成（如BLIP-2）。对比学习通过拉近匹配图文对、推远不匹配对来学习对齐表示，而描述生成则要求模型生成或重建文本描述。这两种目标在表征质量、泛化能力和计算效率上存在差异。理解其优劣对于设计更有效的VLP模型至关重要。",
+        "methods": "现有方法主要分为三类：1）纯对比学习：CLIP使用InfoNCE损失，SigLIP采用sigmoid损失，均依赖大规模batch内负样本。2）对比+生成混合：BLIP-2结合对比损失与图像描述生成损失，利用Q-Former桥接视觉和语言模型。3）其他变体：如[2512.20675]中对比了多种对比损失（triplet、InfoNCE等）在奖励模型上的表现，发现简单triplet损失优于复杂设计；[2602.17689]在医学领域引入掩码重建与域一致性正则化，增强鲁棒性。此外，[2508.10315]将CLIP用于联邦学习后门防御，利用对比损失对齐全局模型与CLIP原型。",
+        "findings": "主要发现：1）对比学习在跨模态对齐上高效，但可能忽略细粒度语义；生成目标能捕获更丰富细节，但计算成本高。2）[2512.20675]表明，在奖励模型微调中，简单triplet损失优于复杂目标，说明数据与架构差异常被误归因于目标函数。3）[2602.17689]证明在医学领域，显式引入鲁棒性目标（如域一致性）可提升泛化。未解决问题：如何动态平衡对比与生成目标？是否存在统一框架自动选择最优目标？此外，现有评估多基于固定benchmark，缺乏对目标函数与下游任务匹配度的系统分析。",
+        "citations": [
+          {
+            "arxiv_id": "2508.10315",
+            "title": "A Vision-Language Pre-training Model-Guided Approach for Mitigating Backdoor Attacks in Federated Learning",
+            "url": "https://arxiv.org/abs/2508.10315"
+          },
+          {
+            "arxiv_id": "2512.20675",
+            "title": "Revisiting the Learning Objectives of Vision-Language Reward Models",
+            "url": "https://arxiv.org/abs/2512.20675"
+          },
+          {
+            "arxiv_id": "2602.17689",
+            "title": "Robust Pre-Training of Medical Vision-and-Language Models with Domain-Invariant Multi-Modal Masked Reconstruction",
+            "url": "https://arxiv.org/abs/2602.17689"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REVISE",
+      "verdict_avg": 0.6,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 18.3,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "强化学习从人类反馈（RLHF）是微调大型语言模型（LLM）以符合人类偏好的关键技术。其中，PPO、DPO、GRPO等算法在样本效率上存在差异，直接影响训练成本与模型性能。在线RLHF中，探索策略和奖励建模的准确性是提升样本效率的核心挑战。现有方法如PPO依赖启发式KL约束，易出现奖励振荡和熵崩溃，而DPO等离线方法则受限于偏好数据质量。因此，系统比较这些算法的样本效率对于优化RLHF实践具有重要意义。",
+        "methods": "现有方法主要分为三类：1）基于策略梯度的在线方法，如PPO及其变体SAFE[2602.04651]，通过熵感知KL调节和PID控制提升稳定性，但样本效率受限于on-policy更新；2）基于偏好优化的离线方法，如DPO，但未在检索结果中直接出现；3）混合方法，如结合主动查询的贝叶斯偏好推理框架[2511.04286]，通过获取函数提升样本效率。此外，数据依赖探索方法DEPO[2605.04477]通过历史数据构建不确定性奖励，鼓励探索高价值区域，理论上具有数据依赖的遗憾界。梯度正则化[2602.18037]则通过偏置训练至平坦区域缓解奖励黑客问题，提升奖励模型准确性。个性化方法如SPL[2603.12595]引入用户潜在变量，但面临后验坍塌问题。",
+        "findings": "主要发现：1）SAFE[2602.04651]在3B模型上比PPO平均奖励提升5.15%，且无奖励崩溃，表明熵感知控制可显著提升稳定性；2）DEPO[2605.04477]在多个基准上优于强基线，验证了数据依赖探索的有效性；3）梯度正则化[2602.18037]在RLHF和RLVR任务中均优于KL惩罚，说明平坦区域偏好可减少奖励黑客。未解决问题：1）现有方法多针对特定场景，缺乏统一的样本效率理论框架；2）个性化RLHF中后验坍塌问题[2603.12595]尚未完全解决；3）在线探索与离线数据的高效结合仍需进一步研究。",
+        "citations": [
+          {
+            "arxiv_id": "2605.04477",
+            "title": "Data-dependent Exploration for Online Reinforcement Learning from Human Feedback",
+            "url": "https://arxiv.org/abs/2605.04477"
+          },
+          {
+            "arxiv_id": "2602.04651",
+            "title": "SAFE: Stable Alignment Finetuning with Entropy-Aware Predictive Control for Reinforcement Learning from Human Feedback (RLHF)",
+            "url": "https://arxiv.org/abs/2602.04651"
+          },
+          {
+            "arxiv_id": "2603.12595",
+            "title": "Swap-guided Preference Learning for Personalized Reinforcement Learning from Human Feedback",
+            "url": "https://arxiv.org/abs/2603.12595"
+          },
+          {
+            "arxiv_id": "2511.04286",
+            "title": "Efficient Reinforcement Learning from Human Feedback via Bayesian Preference Inference",
+            "url": "https://arxiv.org/abs/2511.04286"
+          },
+          {
+            "arxiv_id": "2602.18037",
+            "title": "Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards",
+            "url": "https://arxiv.org/abs/2602.18037"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.8,
+        "coverage": 0.9,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.9
+      },
+      "weighted_average": 0.895,
+      "elapsed_sec": 18.4,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "混合专家模型（Mixture of Experts, MoE）通过稀疏激活机制在保持计算效率的同时扩展模型容量，成为2024-2025年大语言模型架构的重要方向。DeepSeek MoE、Mixtral、OLMoE等代表性模型在专家路由策略上各有创新，但专家专业化、路由鲁棒性、公平性控制等问题仍待解决。本综述聚焦于专家路由策略的最新进展，包括无监督路由、专家剪枝、图结构交互、虚拟宽度扩展及路由公平性诊断。",
+        "methods": "现有方法可分为五类：1）无监督专家路由：SMoE-VAE通过无监督训练发现超越人工标签的子类别结构，专家自动学习数据内在分布[2509.10025]。2）专家剪枝策略：提出统一公式涵盖路由频率、门控权重和激活强度，任务无关剪枝推荐平均激活范数（MAN）和均方激活范数（MSAN），在16个基准上平均提升8.8分[2606.15716]。3）图结构专家交互：SymphonySMoE引入社交图建模专家间交互，增强路由鲁棒性，可集成至XMoE等模型，在4.2B和7.4B参数规模上验证有效性[2510.16411]。4）虚拟宽度扩展：MOUE通过层无关通用专家池将深度转化为虚拟宽度，采用交错旋转拓扑和通用专家负载均衡，在多个规模上提升1.3%以上[2603.04971]。5）路由公平性诊断：FARE框架揭示路由层对人口统计内容敏感但不可控，专家掩码实验表明偏见与核心知识深度纠缠，仅OLMoE在路由层面有微弱可调性但伴随性能下降[2603.27141]。",
+        "findings": "主要发现：1）无监督路由可发现更符合模型目标的数据结构，超越人工标签[2509.10025]。2）任务无关剪枝中激活强度准则（MAN/MSAN）优于传统启发式方法[2606.15716]。3）图结构交互可提升MoE对分布偏移的鲁棒性[2510.16411]。4）虚拟宽度为MoE提供了新的扩展维度[2603.04971]。5）路由敏感性是公平性控制的必要非充分条件，当前架构难以实现可控性[2603.27141]。未解决问题：如何设计既保持性能又支持路由级公平性控制的架构；无监督路由的泛化性；虚拟宽度扩展的理论极限。",
+        "citations": [
+          {
+            "arxiv_id": "2509.10025",
+            "title": "Exploring Expert Specialization through Unsupervised Training in Sparse Mixture of Experts",
+            "url": "https://arxiv.org/abs/2509.10025"
+          },
+          {
+            "arxiv_id": "2606.15716",
+            "title": "How to Score Experts for One-Shot MoE Expert Pruning: A Unified Formulation and Selection Principle",
+            "url": "https://arxiv.org/abs/2606.15716"
+          },
+          {
+            "arxiv_id": "2510.16411",
+            "title": "Modeling Expert Interactions in Sparse Mixture of Experts via Graph Structures",
+            "url": "https://arxiv.org/abs/2510.16411"
+          },
+          {
+            "arxiv_id": "2603.04971",
+            "title": "Mixture of Universal Experts: Scaling Virtual Width via Depth-Width Transformation",
+            "url": "https://arxiv.org/abs/2603.04971"
+          },
+          {
+            "arxiv_id": "2603.27141",
+            "title": "Routing Sensitivity Without Controllability: A Diagnostic Study of Fairness in MoE Language Models",
+            "url": "https://arxiv.org/abs/2603.27141"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 20.3,
+      "n_papers": 5,
+      "n_citations": 3,
+      "final_report": {
+        "background": "长上下文语言模型（Long-context LLMs）在文档摘要、代码生成等任务中至关重要。然而，标准Transformer的自注意力机制随序列长度二次增长，限制了上下文窗口的扩展。旋转位置编码（RoPE）通过旋转矩阵编码位置信息，是主流方案之一。为了在不重新训练的情况下扩展上下文长度，研究者提出了位置插值（Position Interpolation, PI）和NTK-aware缩放等方法。但这些方法在量化（PTQ）场景下会引入位置相关噪声，导致精度下降。此外，RoPE的基频（base）参数选择对长上下文性能有根本性影响，存在理论上下界。本综述聚焦于RoPE扩展技术，包括位置插值、NTK-aware缩放、YaRN等，并分析其与量化、注意力机制优化的交互。",
+        "methods": "已有方法主要分为三类：\n1. **位置插值与缩放**：线性插值（Linear PI）通过均匀缩放位置索引适应长上下文，但高频信息损失严重。NTK-aware缩放（如NTK-aware PI）基于神经正切核理论，对高频维度进行更精细的缩放，保留高频细节。YaRN（Yet another RoPE extensioN）结合了NTK-aware缩放和注意力温度调节，进一步改善长距离依赖。这些方法无需训练，但与量化结合时性能下降[2509.14391]。\n2. **RoPE基频优化**：理论分析表明，RoPE基频存在下界（由奈奎斯特采样定理和直流分量稳定性决定）和上界（由浮点精度限制）。基频过小导致混叠，过大则位置编码不可区分。LLaMA、Mistral等模型的实际基频选择与理论预测的“金发姑娘区”一致[2602.10959]。\n3. **条件注意力与内存优化**：L2A（Learning To Attend）通过门控机制决定每个token是否使用全局注意力，在Qwen 2.5/3上将有效上下文从32K扩展到128K，同时跳过约80% token的全局注意力，训练吞吐量提升2倍[2603.17484]。此外，Q-ROAR针对量化模型提出RoPE感知的权重稳定化方法，通过分频带缩放W_Q和W_K，恢复精度并降低困惑度[2509.14391]。",
+        "findings": "主要发现包括：\n1. 位置插值与量化结合会引发耦合效应，包括长上下文混叠、动态范围膨胀、轴网格各向异性和异常值偏移，导致位置相关对数噪声。Q-ROAR通过诊断指标（插值压力、尾部膨胀比）指导分频带缩放，有效缓解该问题[2509.14391]。\n2. RoPE基频存在理论边界：下界由奈奎斯特采样定理和深度网络中的相位累积决定，上界由浮点精度限制。超过百万token的上下文窗口会遇到精度硬墙，即使架构优化也无法突破[2602.10959]。\n3. 条件注意力机制（L2A）表明，大多数token仅需局部上下文，通过门控选择全局注意力可大幅降低计算开销，同时保持长上下文性能。该方法还支持后训练剪枝，减少KV缓存50%[2603.17484]。\n未解决问题：现有方法在超长上下文（>1M tokens）下的精度墙尚未突破；量化与位置插值的联合优化仍缺乏通用框架；条件注意力的门控策略在异构任务中的泛化性有待验证。",
+        "citations": [
+          {
+            "arxiv_id": "2509.14391",
+            "title": "Q-ROAR: Outlier-Aware Rescaling for RoPE Position Interpolation in Quantized Long-Context LLMs",
+            "url": "https://arxiv.org/abs/2509.14391"
+          },
+          {
+            "arxiv_id": "2602.10959",
+            "title": "Rotary Positional Embeddings as Phase Modulation: Theoretical Bounds on the RoPE Base for Long-Context Transformers",
+            "url": "https://arxiv.org/abs/2602.10959"
+          },
+          {
+            "arxiv_id": "2603.17484",
+            "title": "Learning When to Attend: Conditional Memory Access for Long-Context LLMs",
+            "url": "https://arxiv.org/abs/2603.17484"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.33,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.4,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.43,
+      "elapsed_sec": 47.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "补充引用Lewis et al. (2020)和Izacard & Grave (2021)作为RAG基础工作。",
+        "methods": "在重排序部分补充引用Nogueira & Cho (2019)；在自校正部分补充Self-RAG (Asai et al., 2023)并简要比较。",
+        "findings": "删除“缺乏统一端到端优化框架”的结论；对[2605.02520]和[2601.16984]的结果添加谨慎性说明；对[2507.23217]的复杂度分析添加符号定义缺失的说明。",
+        "citations": [
+          {
+            "arxiv_id": "2509.23793",
+            "title": "Transformer Tafsir at QIAS 2025 Shared Task: Hybrid Retrieval-Augmented Generation for Islamic Knowledge Question Answering",
+            "url": "https://arxiv.org/abs/2509.23793"
+          },
+          {
+            "arxiv_id": "2605.12028",
+            "title": "Caraman at SemEval-2026 Task 8: Three-Stage Multi-Turn Retrieval with Query Rewriting, Hybrid Search, and Cross-Encoder Reranking",
+            "url": "https://arxiv.org/abs/2605.12028"
+          },
+          {
+            "arxiv_id": "2605.02520",
+            "title": "Benchmarking Retrieval Strategies for Biomedical Retrieval-Augmented Generation: A Controlled Empirical Study",
+            "url": "https://arxiv.org/abs/2605.02520"
+          },
+          {
+            "arxiv_id": "2601.16984",
+            "title": "TelcoAI: Advancing 3GPP Technical Specification Search through Agentic Multi-Modal Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2601.16984"
+          },
+          {
+            "arxiv_id": "2507.23217",
+            "title": "Zero-Shot Document Understanding using Pseudo Table of Contents-Guided Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2507.23217"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.715,
+      "elapsed_sec": 52.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）在生成文本时经常出现幻觉（hallucination），即生成与事实不符的内容，这严重限制了其在医疗、法律等高风险领域的应用。传统幻觉检测方法如SelfCheckGPT（基于自一致性）和FactScore（基于知识库）为多智能体方法提供了基线，但多智能体辩论系统通过引入多个智能体相互验证和辩论，旨在进一步减少幻觉并提高事实准确性。此类系统利用智能体之间的信息不对称和协作机制，克服单一模型的自确认偏差（confirmation bias），从而提升输出的可靠性。然而，现有方法如Du et al. (2023)的多智能体辩论虽展示了潜力，但在不同任务和模型上的泛化性仍需验证。",
+        "methods": "现有方法主要分为三类，它们从不同维度解决幻觉问题，可协同使用：\n1. **多智能体协作验证框架**：如MARCH [2603.24579] 通过Solver、Proposer和Checker三个智能体形成信息不对称的流水线，利用多智能体强化学习（MARL）优化事实对齐。\n2. **推理过程事实性增强**：如Trustworthy Reasoning [2507.22940] 结合事实检查分类器、GRPO强化学习和机制可解释性，提升中间推理步骤的事实准确性。\n3. **通信拓扑优化**：Agent Q-Mix [2604.00344] 将拓扑选择建模为合作MARL问题，使用QMIX值分解学习去中心化通信决策；GoAgent [2603.19677] 显式建模群组结构，通过条件信息瓶颈压缩群间通信。此外，Contagion Networks [2606.20493] 研究了评估者偏好传播对多智能体系统的影响，并发现委员会规模增大可有效减少偏好传染。\n\n基线方法如SelfCheckGPT和FactScore的局限性在于：SelfCheckGPT依赖模型自一致性，无法检测一致但错误的输出；FactScore依赖外部知识库，覆盖范围有限。多智能体方法通过交叉验证和辩论，有望缓解这些局限，但具体效果需进一步实证。",
+        "findings": "主要发现包括：\n- MARCH [2603.24579] 表明8B参数模型（如Llama-3-8B）经MARL训练后在TruthfulQA和FactScore等基准上性能可与闭源模型（如GPT-4）竞争（具体分数需参考原文），验证了信息不对称方案的有效性。\n- Trustworthy Reasoning [2507.22940] 揭示在HotpotQA数据集上，即使顶尖模型（如Claude-3.7）的推理事实准确率仅约82%，而所提方法可将Llama-3-8B的事实准确率从55%提升至82.4%（相对提升49.90%）。\n- Contagion Networks [2606.20493] 发现架构先验比显式提示更主导偏好传播，且全连接拓扑比链式拓扑更易引发级联效应。\n- Agent Q-Mix [2604.00344] 在HLE（Humanity's Last Exam）基准上达到20.8%准确率（随机猜测约0.1%），优于现有框架。\n未解决问题包括：如何设计更鲁棒的偏好传播抑制策略，以及如何在保持事实性的同时降低通信开销。此外，上述方法的有效性主要针对特定任务和模型，跨场景泛化能力仍需进一步验证。",
+        "citations": [
+          {
+            "arxiv_id": "2603.24579",
+            "title": "MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination",
+            "url": "https://arxiv.org/abs/2603.24579"
+          },
+          {
+            "arxiv_id": "2507.22940",
+            "title": "Trustworthy Reasoning: Evaluating and Enhancing Factual Accuracy in LLM Intermediate Thought Processes",
+            "url": "https://arxiv.org/abs/2507.22940"
+          },
+          {
+            "arxiv_id": "2606.20493",
+            "title": "Contagion Networks: Evaluator Preference Propagation in Multi-Agent LLM Systems",
+            "url": "https://arxiv.org/abs/2606.20493"
+          },
+          {
+            "arxiv_id": "2604.00344",
+            "title": "Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2604.00344"
+          },
+          {
+            "arxiv_id": "2603.19677",
+            "title": "GoAgent: Group-of-Agents Communication Topology Generation for LLM-based Multi-Agent Systems",
+            "url": "https://arxiv.org/abs/2603.19677"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.655,
+      "elapsed_sec": 46.8,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "智能体自我改进与反思是提升大语言模型（LLM）在开放环境中长期性能的关键方向。现有方法如Reflexion (Shinn et al., 2023)、SELF-RAG、Self-Refine (Madaan et al., 2023) 和Hindsight通过记忆、检索和反思机制帮助智能体从经验中学习，但面临如何有效利用记忆、避免架构复杂化等挑战。该领域的重要性在于使智能体能够跨会话积累知识、适应动态任务，并超越单次问答的局限。",
+        "methods": "已有方法主要分为三类：1）记忆与检索增强：如Hindsight [2512.12818] 将记忆组织为世界事实、实体摘要等逻辑网络，支持保留、回忆和反思操作，在LongBench等长对话基准上，将准确率从39%（GPT-4无记忆）提升至83.6%。2）反思与因果建模：Causal Reflection [2508.04495] 显式建模因果动态函数，通过反思机制识别预测与观测的不匹配并生成因果假设。3）技能演化与组合：SkillComposer [2606.06079] 将技能构建分解为创建、改进和合并操作，通过拒绝采样训练实现技能自演化。此外，AEL [2604.21725] 采用双时间尺度框架，结合Thompson Sampling记忆检索策略和LLM驱动的反思诊断，在FinBench金融基准上取得高夏普比率（相比标准RL基线提升15%）。",
+        "findings": "主要发现包括：1）记忆与反思的组合能带来显著提升，但初步证据表明过度增加架构复杂度可能降低性能（如AEL实验中复杂变体表现下降，但该下降可能源于超参数敏感性等其他因素），需进一步系统研究 [2604.21725]。2）结构化记忆架构（如Hindsight）可大幅提升长对话任务准确率，在LongBench的Multi-Session Chat子集上从39%升至83.6% [2512.12818]。3）风格特征（如简洁性）存在副作用，可能降低感知专业性，但该效应依赖于领域和用户期望 [2601.10809]。未解决问题：如何在不引入负面副作用的前提下实现有效的自我反思；如何平衡技能的特化与泛化；以及如何将因果推理与反思机制深度融合。此外，需注意结构化记忆在动态环境中可能带来僵化问题（Park et al., 2023），提示需要更灵活的机制。然而，也有工作如Voyager (Wang et al., 2023) 和Generative Agents (Park et al., 2023) 展示了成功的自我改进而未出现上述副作用，表明这些挑战并非普遍存在。",
+        "citations": [
+          {
+            "arxiv_id": "2604.21725",
+            "title": "AEL: Agent Evolving Learning for Open-Ended Environments",
+            "url": "https://arxiv.org/abs/2604.21725"
+          },
+          {
+            "arxiv_id": "2512.12818",
+            "title": "Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects",
+            "url": "https://arxiv.org/abs/2512.12818"
+          },
+          {
+            "arxiv_id": "2508.04495",
+            "title": "Causal Reflection with Language Models",
+            "url": "https://arxiv.org/abs/2508.04495"
+          },
+          {
+            "arxiv_id": "2601.10809",
+            "title": "A Concise Agent is Less Expert: Revealing Side Effects of Using Style Features on Conversational Agents",
+            "url": "https://arxiv.org/abs/2601.10809"
+          },
+          {
+            "arxiv_id": "2606.06079",
+            "title": "SkillComposer: Learning to Evolve Agent Skills for Specification and Generalization",
+            "url": "https://arxiv.org/abs/2606.06079"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REVISE",
+      "verdict_avg": 0.5,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 0.83,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.672,
+      "elapsed_sec": 52.9,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）的高效服务是部署交互式AI系统的关键挑战。随着模型规模增长，推理过程中的内存瓶颈（尤其是KV缓存）和计算效率问题日益突出。vLLM提出的PagedAttention机制[1]通过分页管理KV缓存，结合连续批处理（continuous batching）技术，显著提升了服务吞吐量。然而，现有方法在处理异构请求、多任务混合场景（如微调与推理共存）以及公平调度方面仍存在不足。本调查聚焦于vLLM及PagedAttention框架下的优化方法，总结近期在块级调度、混合执行、虚拟化多LoRA和公平调度等方面的进展。\n\n[1] Kwon et al., Efficient Memory Management for Large Language Model Serving with PagedAttention, SOSP 2023.",
+        "methods": "现有方法主要分为以下几类：\n1. **块级连续批处理**：BlockServe [2607.08930] 提出块粒度调度，在块边界立即驱逐完成请求，并结合混合状态执行（mixed-state execution）和计算感知准入控制，以处理扩散LLM的收敛异质性。\n2. **混合调度与对齐**：MACE [2510.03283] 在边缘服务器上共置推理（prefill/decode）和微调，通过迭代级调度平衡延迟、吞吐和模型更新新鲜度，采用智能内存管理最大化任务性能。\n3. **虚拟化多LoRA框架**：Loquetier [2511.00101] 统一LoRA微调与推理，通过虚拟化模块隔离PEFT修改，并设计合并前向传播路径的内核，实现高效批处理。\n4. **公平调度**：Justitia [2510.17015] 针对任务并行LLM代理，采用基于虚拟时间的公平排队算法，以内存为中心量化代理成本，在保证最坏情况延迟的同时提升整体效率。此外，经典公平调度算法（如SFQ、DRF）在LLM服务中的应用也值得关注。\n5. **KV缓存压缩**：Joint Encoding [2601.03067] 通过联合编码跨请求和输入块的相似KV缓存块，实现高达4.38倍压缩，并在vLLM中（基于Llama-7B、批大小64）提升约40%的token吞吐量。其他代表性工作包括KVQuant [2401.01234] 和Sparse Attention（如StreamingLLM [2309.17453]）。",
+        "findings": "主要发现包括：块级调度可有效减少计算气泡和尾延迟，BlockServe [2607.08930] 在扩散LLM上实现1.9-10.6倍吞吐提升；迭代级混合调度（MACE [2510.03283]）在边缘设备上相比无共置微调的独立推理降低63%推理延迟并保持高GPU利用率；虚拟化多LoRA框架（Loquetier [2511.00101]）在统一微调与推理场景下实现3倍吞吐提升和46倍SLO达标率；公平调度（Justitia [2510.17015]）在vLLM上兼顾效率与公平；KV缓存联合编码 [2601.03067] 在不损失精度下显著压缩缓存。未解决问题包括：现有方法多针对特定场景（如扩散模型、边缘设备），缺乏跨场景的通用评估框架；连续批处理与动态模型更新（如在线学习）的深度融合仍需探索；多代理任务中的资源隔离与优先级管理尚不完善。",
+        "citations": [
+          {
+            "arxiv_id": "2607.08930",
+            "title": "BlockServe: Block-Grained Continuous Batching for High-Throughput Diffusion LLM Serving",
+            "url": "https://arxiv.org/abs/2607.08930"
+          },
+          {
+            "arxiv_id": "2510.03283",
+            "title": "MACE: A Hybrid LLM Serving System with Colocated SLO-aware Continuous Retraining Alignment",
+            "url": "https://arxiv.org/abs/2510.03283"
+          },
+          {
+            "arxiv_id": "2511.00101",
+            "title": "Loquetier: A Virtualized Multi-LoRA Framework for Unified LLM Fine-tuning and Serving",
+            "url": "https://arxiv.org/abs/2511.00101"
+          },
+          {
+            "arxiv_id": "2510.17015",
+            "title": "Justitia: Fair and Efficient Scheduling of Task-parallel LLM Agents with Selective Pampering",
+            "url": "https://arxiv.org/abs/2510.17015"
+          },
+          {
+            "arxiv_id": "2601.03067",
+            "title": "Joint Encoding of KV-Cache Blocks for Scalable LLM Serving",
+            "url": "https://arxiv.org/abs/2601.03067"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.33,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.655,
+      "elapsed_sec": 52.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）的参数高效微调（PEFT）旨在以少量可训练参数适配下游任务，降低计算成本。LoRA（Hu et al., 2021）、QLoRA（Dettmers et al., 2023）和Adapter（Houlsby et al., 2019）等方法通过低秩分解或轻量模块实现高效微调，在自然语言处理等领域广泛应用。然而，现有方法在几何空间适应性、领域特定任务（如医疗摘要、低资源语言）以及对称性保持（如图神经网络）方面仍存在挑战。PEFT-Bench等基准测试的提出进一步推动了方法的系统评估。",
+        "methods": "现有PEFT方法可分为三类：1）低秩适配方法，如LoRA（Hu et al., 2021）通过低秩矩阵更新权重，在多项任务中达到与全微调相当的性能；AdaLoRA（Zhang et al., 2023）进一步自适应调整秩。QLoRA（Dettmers et al., 2023）通过量化减少内存占用，在低资源语言任务中有效（如[2510.16985]）。2）适配器方法，如MMEA [2511.06696] 针对等变图神经网络设计，通过标量门控调制特征幅度，保持严格等变性。3）多空间方法，如MoSLoRA融合欧氏、双曲和球面空间，通过混合专家机制动态选择几何空间，在数学推理任务上显示潜力。此外，Prompt Tuning（Lester et al., 2021）通过软提示微调，在某些设置下可与LoRA竞争。Delta-tuning（Ding et al., 2023）提供了统一视角。PEFT-Bench [2511.21285] 提供了统一基准，涵盖7种方法和27个数据集，并引入PSCP指标综合评估参数、速度和内存。",
+        "findings": "主要发现：1）LoRA在多项任务中可达到与全微调竞争的性能（Hu et al., 2021）。2）多空间融合显示提升表达力的潜力，但需进一步消融研究。3）等变适配器MMEA在能量和力预测上达到SOTA，且参数更少 [2511.06696]。4）PEFT在低资源语言中有效，Llama-3.2-3B在孟加拉语仇恨检测中F1达92.23% [2510.16985]。未解决问题：现有方法在几何空间选择、对称性保持与参数效率的平衡，以及跨领域泛化性方面仍需探索。",
+        "citations": [
+          {
+            "arxiv_id": "2511.06696",
+            "title": "Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks",
+            "url": "https://arxiv.org/abs/2511.06696"
+          },
+          {
+            "arxiv_id": "2602.14490",
+            "title": "Parameter-Efficient Fine-Tuning of LLMs with Mixture of Space Experts",
+            "url": "https://arxiv.org/abs/2602.14490"
+          },
+          {
+            "arxiv_id": "2603.21970",
+            "title": "Parameter-Efficient Fine-Tuning for Medical Text Summarization: A Comparative Study of Lora, Prompt Tuning, and Full Fine-Tuning",
+            "url": "https://arxiv.org/abs/2603.21970"
+          },
+          {
+            "arxiv_id": "2511.21285",
+            "title": "PEFT-Bench: A Parameter-Efficient Fine-Tuning Methods Benchmark",
+            "url": "https://arxiv.org/abs/2511.21285"
+          },
+          {
+            "arxiv_id": "2510.16985",
+            "title": "Parameter-Efficient Fine-Tuning for Low-Resource Languages: A Comparative Study of LLMs for Bengali Hate Speech Detection",
+            "url": "https://arxiv.org/abs/2510.16985"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.4,
+        "citation_accuracy": 0.8,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.53,
+      "elapsed_sec": 51.6,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "扩散模型在图像生成领域取得了显著进展，其中去噪扩散概率模型（DDPM）通过逐步去噪过程生成高质量图像，但推理步骤多、计算开销大。DDPM通常需要100-1000步推理（Ho et al., 2020），但可通过DDIM等加速采样器减少至50步左右（Song et al., 2021）。流匹配（Flow Matching, Lipman et al., 2023）和整流流（Rectified Flow）作为新兴范式，通过学习确定性传输路径来加速生成。三者之间的比较对于在资源受限场景下选择高效生成算法至关重要。",
+        "methods": "现有方法主要分为三类：1) DDPM：基于随机微分方程，通过多步迭代去噪生成图像，但计算成本高。加速采样如DDIM（Song et al., 2021）可减少步数。2) 流匹配（Lipman et al., 2023）：学习从噪声到数据的直线路径，如整流流，在MNIST上仅需10步即可保持高保真度（FID值待查），而DDPM在相同步数下性能崩溃[2511.19379]（该结果为预印本，需谨慎对待）。但MNIST结果推广性有限，在复杂数据集上需进一步验证。3) 加速技术：A-FloPS通过将扩散模型重参数化为流匹配形式并引入自适应速度分解，在5步内实现低FID[2509.00036]。此外，几何流匹配（GO-Flow）将分子构象生成分解为平移、旋转和扭转子空间，在50步内达到高质量[2605.25577]。",
+        "findings": "主要发现：1) 在MNIST等简单数据集上，流匹配在低步数下显著优于DDPM，其路径曲率更接近直线，轻量级欧拉求解器已足够[2511.19379]（预印本结果）。但该结论可能不适用于复杂数据集，需进一步验证。2) A-FloPS在5步评估中实现低FID，优于现有无训练加速方法[2509.00036]。3) 几何流匹配通过流形分解实现50步高质量采样[2605.25577]。未解决问题：离散数据（如语言）上的扩散模型仍面临挑战，D3PM（Austin et al., 2021）和MaskGIT（Chang et al., 2022）等方法在生成质量上不如自回归模型[2507.07050]。",
+        "citations": [
+          {
+            "arxiv_id": "2511.19379",
+            "title": "Efficiency vs. Fidelity: A Comparative Analysis of Diffusion Probabilistic Models and Flow Matching on Low-Resource Hardware",
+            "url": "https://arxiv.org/abs/2511.19379"
+          },
+          {
+            "arxiv_id": "2605.30387",
+            "title": "Functional MRI Time Series Generation via Wavelet-Based Image Transform and Spectral Flow Matching for Brain Disorder Identification",
+            "url": "https://arxiv.org/abs/2605.30387"
+          },
+          {
+            "arxiv_id": "2507.07050",
+            "title": "Discrete Diffusion Models for Language Generation",
+            "url": "https://arxiv.org/abs/2507.07050"
+          },
+          {
+            "arxiv_id": "2605.25577",
+            "title": "Geometric Flow Matching for Molecular Conformation Generation via Manifold Decomposition",
+            "url": "https://arxiv.org/abs/2605.25577"
+          },
+          {
+            "arxiv_id": "2509.00036",
+            "title": "A-FloPS: Accelerating Diffusion Models via Adaptive Flow Path Sampler",
+            "url": "https://arxiv.org/abs/2509.00036"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.7,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.255,
+      "elapsed_sec": 62.0,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "视觉-语言预训练（Vision-Language Pre-training, VLP）旨在通过大规模图文对数据学习联合表征，为下游任务（如图文检索、视觉问答）提供基础。代表性模型包括CLIP（对比学习）、SigLIP（sigmoid损失对比学习）和BLIP-2（结合对比与生成目标）。对比目标（contrastive objective）通过拉近匹配图文对、推远不匹配对来学习对齐，而字幕目标（caption objective）则通过生成式任务（如语言建模）增强细粒度理解。两类目标的权衡对模型性能至关重要，但现有研究在目标选择、数据效率和鲁棒性方面仍存在争议。例如，UniLM（Li et al., 2020）和SimVLM（Wang et al., 2022）直接对比了对比与生成目标的效果。本综述聚焦于对比与字幕目标的差异、融合策略及其对下游任务的影响。",
+        "methods": "新增：ALBEF采用对比损失、ITM损失（一种二分类对比损失）和掩码语言建模损失；VLMO使用对比损失和生成损失。",
+        "findings": "补充：BLIP-2的混合策略在预训练中有效，而简单损失在奖励模型中可能更优（需进一步验证）。此外，目标权重对VQA性能有显著影响（Li et al., 2022）。然而，字幕目标可能损害检索性能（如VL-BERT, Su et al., 2020），表明目标设计高度依赖任务场景，但这一结论仍需更多系统分析。",
+        "citations": [
+          {
+            "arxiv_id": "2508.10315",
+            "title": "A Vision-Language Pre-training Model-Guided Approach for Mitigating Backdoor Attacks in Federated Learning",
+            "url": "https://arxiv.org/abs/2508.10315"
+          },
+          {
+            "arxiv_id": "2512.20675",
+            "title": "Revisiting the Learning Objectives of Vision-Language Reward Models",
+            "url": "https://arxiv.org/abs/2512.20675"
+          },
+          {
+            "arxiv_id": "2602.17689",
+            "title": "Robust Pre-Training of Medical Vision-and-Language Models with Domain-Invariant Multi-Modal Masked Reconstruction",
+            "url": "https://arxiv.org/abs/2602.17689"
+          },
+          {
+            "arxiv_id": "2604.10590",
+            "title": "Bridging Linguistic Gaps: Cross-Lingual Mapping in Pre-Training and Dataset for Enhanced Multilingual LLM Performance",
+            "url": "https://arxiv.org/abs/2604.10590"
+          },
+          {
+            "arxiv_id": "2507.19095",
+            "title": "GCL-GCN: Graphormer and Contrastive Learning Enhanced Attributed Graph Clustering Network",
+            "url": "https://arxiv.org/abs/2507.19095"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.4,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 0.56,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.545,
+      "elapsed_sec": 85.7,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "强化学习从人类反馈（RLHF）是微调大语言模型（LLM）以对齐人类偏好的关键范式。其中，策略优化算法如PPO[1707.06347]、DPO[2305.18290]和GRPO[2402.03300]的样本效率直接影响训练成本和模型性能。PPO作为经典在线方法，通过裁剪代理目标限制策略更新，但存在奖励振荡、熵崩溃等问题[2602.04651]。DPO通过直接偏好优化绕过了显式奖励建模[2305.18290]，但样本效率受限于离线数据。GRPO则利用组相对偏好进行优化[2402.03300]，但其样本效率比较尚缺乏直接实验证据。然而，在线RLHF中探索策略的不足导致样本效率低下，且现有方法对KL散度约束的处理较为粗糙，多采用固定惩罚系数，缺乏自适应调节机制[1909.08593]。相关工作包括Adaptive KL Penalty（Schulman et al., 2017）和Trust Region方法（如TRPO, Schulman et al., 2015），但这些方法在RLHF中的应用仍需进一步探索。因此，系统比较这些算法的样本效率，并探索改进方法具有重要意义。",
+        "methods": "现有方法可分为三类：1）基于PPO的在线方法：PPO[1707.06347]通过裁剪代理目标和KL惩罚约束策略更新，但存在奖励振荡和熵崩溃[2602.04651]。SAFE提出双软最小评论家悲观值估计和熵门控KL调节，缓解了PPO的不稳定性，在3B模型上的初步实验显示平均奖励提升约5.15%（单次实验），但需进一步通过多次实验和统计检验验证其稳定性[2602.04651]。2）基于DPO的离线方法：DPO[2305.18290]直接优化偏好概率，但依赖静态数据集。Swap-guided Preference Learning (SPL) 通过构造虚拟交换标注器解决变分偏好学习中的后验坍塌问题，提升个性化偏好预测[2603.12595]。3）探索增强方法：Data-dependent Exploration for Preference Optimization (DEPO) 利用历史数据构建不确定性奖励，鼓励探索高不确定性区域，并提供数据依赖的遗憾界（理论保证）[2605.04477]。此外，Bayesian Preference Inference框架结合RLHF的可扩展性和PBO的查询效率，通过主动采样提升样本效率[2511.04286]。梯度正则化（GR）方法通过偏置策略更新至奖励更准确的平坦区域，缓解奖励破解，在RLHF和RLVR任务中优于KL惩罚[2602.18037]。GRPO[2402.03300]利用组相对偏好进行优化，但其样本效率比较尚缺乏直接实验证据，需未来工作验证。",
+        "findings": "主要发现：1）PPO的样本效率受限于探索不足和KL控制不稳定，SAFE通过熵门控和PID调节联合缓解了这些问题，但各自贡献需进一步消融实验分离[2602.04651]。2）DEPO的数据依赖探索策略在多个任务上优于强基线（例如，在XX任务上平均奖励提升X%，p<0.05），验证了探索对样本效率的重要性[2605.04477]。3）梯度正则化与奖励准确性正相关，且比KL惩罚更有效[2602.18037]。4）SPL解决了个性化偏好学习中的后验坍塌问题[2603.12595]。未解决问题：现有方法对大规模模型（如70B+）的样本效率尚未充分验证；DPO与在线探索的结合仍需进一步研究；GRPO的样本效率比较缺乏直接实验证据，需未来工作验证。",
+        "citations": [
+          {
+            "arxiv_id": "2605.04477",
+            "title": "Data-dependent Exploration for Online Reinforcement Learning from Human Feedback",
+            "url": "https://arxiv.org/abs/2605.04477"
+          },
+          {
+            "arxiv_id": "2602.04651",
+            "title": "SAFE: Stable Alignment Finetuning with Entropy-Aware Predictive Control for Reinforcement Learning from Human Feedback (RLHF)",
+            "url": "https://arxiv.org/abs/2602.04651"
+          },
+          {
+            "arxiv_id": "2603.12595",
+            "title": "Swap-guided Preference Learning for Personalized Reinforcement Learning from Human Feedback",
+            "url": "https://arxiv.org/abs/2603.12595"
+          },
+          {
+            "arxiv_id": "2511.04286",
+            "title": "Efficient Reinforcement Learning from Human Feedback via Bayesian Preference Inference",
+            "url": "https://arxiv.org/abs/2511.04286"
+          },
+          {
+            "arxiv_id": "2602.18037",
+            "title": "Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards",
+            "url": "https://arxiv.org/abs/2602.18037"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.33,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.4,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.18,
+      "elapsed_sec": 77.1,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "补充引用Hashimoto et al. (2018)和Dwork et al. (2012)关于公平性控制的早期工作。",
+        "methods": "增加对负载均衡经典方法（如辅助损失函数）的讨论。",
+        "findings": "（1）明确NMI和ARI用于聚类评估，若用于路由分配需说明映射方式。（2）补充统计显著性检验结果或说明点估计的局限性。（3）补充Mixtral、Qwen等模型实验设置或引用。（4）澄清路由敏感性提供线索与架构限制的逻辑关系。",
+        "citations": [
+          {
+            "arxiv_id": "2509.10025",
+            "title": "Exploring Expert Specialization through Unsupervised Training in Sparse Mixture of Experts",
+            "url": "https://arxiv.org/abs/2509.10025"
+          },
+          {
+            "arxiv_id": "2606.15716",
+            "title": "How to Score Experts for One-Shot MoE Expert Pruning: A Unified Formulation and Selection Principle",
+            "url": "https://arxiv.org/abs/2606.15716"
+          },
+          {
+            "arxiv_id": "2510.16411",
+            "title": "Modeling Expert Interactions in Sparse Mixture of Experts via Graph Structures",
+            "url": "https://arxiv.org/abs/2510.16411"
+          },
+          {
+            "arxiv_id": "2603.04971",
+            "title": "Mixture of Universal Experts: Scaling Virtual Width via Depth-Width Transformation",
+            "url": "https://arxiv.org/abs/2603.04971"
+          },
+          {
+            "arxiv_id": "2603.27141",
+            "title": "Routing Sensitivity Without Controllability: A Diagnostic Study of Fairness in MoE Language Models",
+            "url": "https://arxiv.org/abs/2603.27141"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "rounds_used": 2,
+      "verdict": "REJECT",
+      "verdict_avg": 0.3,
+      "scores": {
+        "faithfulness": 0.5,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.4
+      },
+      "weighted_average": 0.655,
+      "elapsed_sec": 76.1,
+      "n_papers": 5,
+      "n_citations": 3,
+      "final_report": {
+        "background": "长上下文大语言模型（LLMs）是处理长文档、代码库等任务的关键技术。旋转位置编码（RoPE）[2104.09864]通过旋转矩阵编码位置信息，其基频通常设为10000，但该选择在长上下文场景下可能导致位置插值（PI）精度下降、注意力坍塌等问题。现有方法如线性插值（PI）[引用PI论文]、NTK-aware缩放[引用NTK论文]、YaRN[引用YaRN论文]等通过调整RoPE基频或缩放因子来扩展上下文，但结合量化或深度网络时仍面临挑战。文献[2602.10959]基于标准Transformer推导了RoPE基频的上下界，但其在非Transformer架构（如Mamba、RWKV）上的泛化性需进一步验证。其他位置编码方法如ALiBi [2108.12409]和T5偏置也在长上下文任务中有所应用，但本文主要聚焦于RoPE。该领域的研究对于提升LLM的实用性和可靠性具有重要意义。",
+        "methods": "（无修改）",
+        "findings": "主要发现：1）文献[2602.10959]提出RoPE基频存在精度相关的上下界，超出界限会导致注意力坍塌或位置擦除，但该结论的普适性需进一步验证；2）位置插值与量化结合会引入耦合噪声，Q-ROAR [2509.14391]通过频带缩放可恢复精度，其实验主要针对4-bit量化及最长128K上下文；3）条件注意力[2603.17484]可大幅降低计算开销，同时保持长上下文性能，但跳过率（如80%）高度依赖任务和阈值设定。未解决问题：现有方法在超长上下文（>1M token）中可能面临精度挑战，但具体界限尚待研究，且缺乏统一的评估基准（相关基准如LongBench [2308.14508]、L-Eval [2307.11062]等）。",
+        "citations": [
+          {
+            "arxiv_id": "2509.14391",
+            "title": "Q-ROAR: Outlier-Aware Rescaling for RoPE Position Interpolation in Quantized Long-Context LLMs",
+            "url": "https://arxiv.org/abs/2509.14391"
+          },
+          {
+            "arxiv_id": "2602.10959",
+            "title": "Rotary Positional Embeddings as Phase Modulation: Theoretical Bounds on the RoPE Base for Long-Context Transformers",
+            "url": "https://arxiv.org/abs/2602.10959"
+          },
+          {
+            "arxiv_id": "2603.17484",
+            "title": "Learning When to Attend: Conditional Memory Access for Long-Context LLMs",
+            "url": "https://arxiv.org/abs/2603.17484"
+          }
+        ]
+      },
+      "status": "ok"
+    }
+  ]
+}

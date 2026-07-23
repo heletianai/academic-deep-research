@@ -1,0 +1,341 @@
+{
+  "meta": {
+    "total": 20,
+    "done": 20,
+    "ts": "20260722_223107",
+    "elapsed_sec": 72.2,
+    "n_topics": 10,
+    "n_configs": 2,
+    "seeds": 1,
+    "ok": 5,
+    "error": 15
+  },
+  "records": [
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 41.4,
+      "n_papers": 0,
+      "n_citations": 0,
+      "final_report": {
+        "background": "ArXiv 检索未返回相关论文。",
+        "methods": "",
+        "findings": "",
+        "citations": []
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 44.2,
+      "n_papers": 0,
+      "n_citations": 0,
+      "final_report": {
+        "background": "ArXiv 检索未返回相关论文。",
+        "methods": "",
+        "findings": "",
+        "citations": []
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "ACCEPT",
+      "verdict_avg": 0.87,
+      "scores": {
+        "faithfulness": 0.7,
+        "coverage": 0.7,
+        "citation_accuracy": 1.0,
+        "structure_coherence": 0.7
+      },
+      "weighted_average": 0.775,
+      "elapsed_sec": 20.5,
+      "n_papers": 5,
+      "n_citations": 5,
+      "final_report": {
+        "background": "大语言模型（LLM）的高效服务面临KV缓存内存管理的关键挑战。KV缓存随请求动态增长和收缩，若管理不当会导致内存碎片化和冗余复制，严重限制批处理大小和吞吐量。PagedAttention（[2309.06180]）受操作系统虚拟内存和分页技术启发，通过非连续物理内存分配实现近零浪费，显著提升吞吐量。然而，其非连续虚拟内存布局带来编程和性能开销。vAttention（[2405.04437]）通过解耦虚拟和物理内存分配，保留虚拟内存连续性，提供更简单、可移植且高性能的替代方案。此外，系统级选择如量化、批处理和请求调度对能耗有数量级影响（[2601.22362]）。在金融领域，YouZhi-LLM（[2606.05868]）通过自适应GQA-to-MLA转换进一步压缩KV缓存，结合vLLM-Ascend实现高并发。这些工作共同推动了LLM服务效率的提升。",
+        "methods": "现有方法主要分为三类：\n1. **基于分页的动态内存管理**：PagedAttention（[2309.06180]）将KV缓存分块管理，按需分配物理内存，消除内部碎片，支持跨请求共享KV缓存。vLLM系统基于此实现2-4倍吞吐量提升。\n2. **保留虚拟连续性的内存管理**：vAttention（[2405.04437]）利用CUDA虚拟内存API，预分配虚拟地址空间，按需提交物理内存，避免非连续布局的开销。它支持FlashAttention和FlashInfer等注意力内核，吞吐量提升达1.23倍。\n3. **KV缓存压缩与架构转换**：YouZhi-LLM（[2606.05868]）提出层自适应GQA-to-MLA转换，动态分配每层FreqFold大小，在保持困惑度下降最小的同时实现高压缩比。结合知识蒸馏和金融微调，在Ascend NPU上通过vLLM-Ascend部署，并发量提升2.43-2.69倍。\n此外，系统级优化如量化、批处理和请求调度（[2601.22362]）可显著影响能耗，结构化请求时序能降低每请求能耗达100倍。",
+        "findings": "主要发现包括：\n1. PagedAttention（[2309.06180]）通过消除KV缓存碎片，使vLLM吞吐量比FasterTransformer和Orca高2-4倍，且长序列和大模型下优势更明显。\n2. vAttention（[2405.04437]）在保留虚拟连续性的同时，避免了PagedAttention的编程复杂性，支持现有关注力内核，吞吐量提升达1.23倍。\n3. 系统对比（[2511.17593]）显示，vLLM在高并发批处理场景下吞吐量比HuggingFace TGI高24倍，而TGI在交互式单用户场景下尾延迟更低。\n4. 能耗优化（[2601.22362]）表明，低精度仅在计算受限时节能，批处理在解码阶段提升能效，请求时序整形可大幅降低能耗。\n5. 未解决问题：现有方法在动态请求混合、长序列推理的极端内存压力以及跨设备内存层次优化方面仍有挑战。",
+        "citations": [
+          {
+            "arxiv_id": "2405.04437",
+            "title": "vAttention: Dynamic Memory Management for Serving LLMs without PagedAttention",
+            "url": "https://arxiv.org/abs/2405.04437"
+          },
+          {
+            "arxiv_id": "2309.06180",
+            "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+            "url": "https://arxiv.org/abs/2309.06180"
+          },
+          {
+            "arxiv_id": "2511.17593",
+            "title": "Comparative Analysis of Large Language Model Inference Serving Systems: A Performance Study of vLLM and HuggingFace TGI",
+            "url": "https://arxiv.org/abs/2511.17593"
+          },
+          {
+            "arxiv_id": "2606.05868",
+            "title": "YouZhi: Towards High-Concurrency Financial LLMs via Adaptive GQA-to-MLA Transition",
+            "url": "https://arxiv.org/abs/2606.05868"
+          },
+          {
+            "arxiv_id": "2601.22362",
+            "title": "Understanding Efficiency: Quantization, Batching, and Serving Strategies in LLM Energy Use",
+            "url": "https://arxiv.org/abs/2601.22362"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 26.0,
+      "n_papers": 0,
+      "n_citations": 0,
+      "final_report": {
+        "background": "ArXiv 检索未返回相关论文。",
+        "methods": "",
+        "findings": "",
+        "citations": []
+      },
+      "status": "ok"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "baseline",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "baseline",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "baseline",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "baseline",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "baseline",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T01",
+      "topic_query": "Multi-agent debate systems for reducing LLM hallucination and improving factual accuracy",
+      "domain": "llm_agent_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T02",
+      "topic_query": "Retrieval-Augmented Generation: hybrid search, reranking, and CRAG self-correction techniques",
+      "domain": "rag_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T03",
+      "topic_query": "vLLM and PagedAttention for efficient LLM serving with continuous batching",
+      "domain": "inference_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T04",
+      "topic_query": "Agent self-improvement and reflection: Reflexion, SELF-RAG, and Self-Refine",
+      "domain": "agent_self_improvement_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T06",
+      "topic_query": "Diffusion models for image generation: DDPM, flow matching, and rectified flow comparison",
+      "domain": "diffusion_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T07",
+      "topic_query": "Vision-Language pre-training: CLIP, SigLIP, and BLIP-2 contrastive vs caption objectives",
+      "domain": "vlm_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T08",
+      "topic_query": "Reinforcement Learning from Human Feedback: PPO, DPO, GRPO sample efficiency comparison",
+      "domain": "rlhf_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T09",
+      "topic_query": "Mixture of Experts in 2024-2025: DeepSeek MoE, Mixtral, OLMoE expert routing strategies",
+      "domain": "moe_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T10",
+      "topic_query": "Long-context LLMs: position interpolation, NTK-aware scaling, YaRN, and rope extensions",
+      "domain": "long_context_cross",
+      "config": "debate_2round",
+      "seed": 1,
+      "elapsed_sec": 0.0,
+      "status": "error",
+      "error": "'authors'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/hetian/Projects/academic-deep-research/scripts/run_ablation.py\", line 94, in run_one\n    result = run_pipeline(\n        query=topic[\"query\"],\n    ...<6 lines>...\n        evaluator=None,  # 我们用新的 4 维 evaluator 单独评\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/graph.py\", line 69, in run_pipeline\n    draft = researcher.run(query)\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 68, in run\n    papers_str = \"\\n\\n\".join(\n        f\"[{p['arxiv_id']}] {p['title']}\\n\"\n    ...<2 lines>...\n        for p in papers\n    )\n  File \"/Users/hetian/Projects/academic-deep-research/src/agents/researcher.py\", line 70, in <genexpr>\n    f\"Authors: {', '.join(p['authors'][:3])}{' et al.' if len(p['authors']) > 3 else ''}\\n\"\n                          ~^^^^^^^^^^^\nKeyError: 'authors'\n"
+    },
+    {
+      "topic_id": "T05",
+      "topic_query": "Parameter-efficient fine-tuning of LLMs: LoRA, QLoRA, and adapter methods",
+      "domain": "peft_user_familiar",
+      "config": "baseline",
+      "seed": 1,
+      "rounds_used": 0,
+      "verdict": "REJECT",
+      "verdict_avg": 0.0,
+      "scores": {
+        "faithfulness": 0.0,
+        "coverage": 0.0,
+        "citation_accuracy": 0.0,
+        "structure_coherence": 0.0
+      },
+      "weighted_average": 0.0,
+      "elapsed_sec": 10.2,
+      "n_papers": 0,
+      "n_citations": 0,
+      "final_report": {
+        "background": "ArXiv 检索未返回相关论文。",
+        "methods": "",
+        "findings": "",
+        "citations": []
+      },
+      "status": "ok"
+    }
+  ]
+}
